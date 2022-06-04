@@ -8,7 +8,7 @@ import 'sample_item_details_view.dart';
 
 class SampleItemListView extends StatefulWidget {
   const SampleItemListView({Key? key}) : super(key: key);
-  static const routeName = '/';
+  static const routeName = '/item_list';
 
   @override
   State<SampleItemListView> createState() => _SampleItemListViewState();
