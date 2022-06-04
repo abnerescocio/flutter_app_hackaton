@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "576138160890",
+    "project_id": "flutter-app-hackathon",
+    "storage_bucket": "flutter-app-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576138160890:android:240030668d2c50c24c7743",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app_hackathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576138160890-rrlr0tfv1bf9mlsg26dhepoi3tavp3kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD72WN9qQpPwPaVFIDjp-eDOd5BCul66L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576138160890-rrlr0tfv1bf9mlsg26dhepoi3tavp3kl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "576138160890-5acmueoqdact5sq5diic8f79t8t8n45b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterAppHackathon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576138160890:android:7a96bcb3fb9acde34c7743",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app_hackaton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576138160890-rrlr0tfv1bf9mlsg26dhepoi3tavp3kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD72WN9qQpPwPaVFIDjp-eDOd5BCul66L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576138160890-rrlr0tfv1bf9mlsg26dhepoi3tavp3kl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "576138160890-5acmueoqdact5sq5diic8f79t8t8n45b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterAppHackathon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
