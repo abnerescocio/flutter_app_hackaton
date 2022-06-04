@@ -1,34 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 
-void main() => runApp(const MyApp());
+class BaseButton extends StatelessWidget {
+  BaseButton({Key? key, required this.text}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  String text;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: MyStatefulWidget(),
-        backgroundColor: CustomColors.mainBackground,
-      ),
-    );
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _BaseButtonTabata();
-}
-
-class _BaseButtonTabata extends State<MyStatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    final ButtonStyle style = ElevatedButton.styleFrom(
-    );
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -43,8 +22,7 @@ class _BaseButtonTabata extends State<MyStatefulWidget> {
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50)))),
               onPressed: () {},
-              child: const Text('Criar tabata',
-                  style: TextStyle(fontFamily: 'Lato')),
+              child: Text(text, style: TextStyle(fontFamily: 'Lato')),
             ),
           ),
         ],
