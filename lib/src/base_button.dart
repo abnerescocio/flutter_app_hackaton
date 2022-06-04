@@ -12,7 +12,6 @@ class BaseButton extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const SizedBox(height: 484),
           Container(
             height: 48,
             width: 296,
