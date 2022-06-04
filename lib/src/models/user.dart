@@ -1,7 +1,21 @@
 class User {
   static String collection = "users";
 
-  bool isFirstAccess;
+  final bool isFirstAccess;
 
-  User(this.isFirstAccess);
+  final num seriesTimeInSeconds;
+  final num sleepTimeInSeconds;
+  final num cycleIntervalInSeconds;
+
+  final num seriesQuantity;
+  final num cycleQuantity;
+
+  User(
+    this.isFirstAccess,
+    this.seriesTimeInSeconds,
+    this.sleepTimeInSeconds,
+    this.cycleIntervalInSeconds,
+    this.seriesQuantity,
+    this.cycleQuantity,
+  );
 }
