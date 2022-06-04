@@ -1,21 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
+import 'package:flutter_app_hackaton/src/sample_feature/sample_item_list_view.dart';
+import 'package:flutter_app_hackaton/src/settings/settings_view.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-void main() => runApp(const MyApp());
+class SplashScreen extends StatefulWidget {
+  static String routerName = "/";
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  late GetUserBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = GetUserBloc();
+    bloc.add(GetUserEvent("time_10"));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: CustomColors.mainBackground,
-        body: Center(
-          child: Lottie.asset('assets/lottie/splash_animation.json',
-              width: 190, height: 231, alignment: Alignment.center,),
-        ),
+    return Scaffold(
+      backgroundColor: CustomColors.mainBackground,
+      body: BlocBuilder<GetUserBloc, GetUserState>(
+        bloc: bloc,
+        builder: (context, state) {
+          late final String nextRoute;
+
+          if (state is SuccessGetUserState) {
+            if (state.user.isFirstAccess) {
+              nextRoute = SampleItemListView.routeName;
+            } else {
+              nextRoute = SettingsView.routeName;
+            }
+          } else if (state is ErrorGetUserState) {
+            nextRoute = SettingsView.routeName;
+          } else {
+            nextRoute = "";
+          }
+
+          if (nextRoute != "") {
+            Future.delayed(
+              const Duration(seconds: 3),
+              () {
+                Navigator.pushReplacementNamed(context, nextRoute);
+              },
+            );
+          }
+
+          return const SplashAnimation();
+        },
+      ),
+    );
+  }
+}
+
+class SplashAnimation extends StatelessWidget {
+  const SplashAnimation({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Lottie.asset(
+        'assets/lottie/splash_animation.json',
+        width: 190,
+        height: 231,
+        alignment: Alignment.center,
       ),
     );
   }

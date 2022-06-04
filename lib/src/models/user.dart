@@ -1,11 +1,7 @@
 class User {
-  bool _hasFirstAccess = false;
+  static String collection = "users";
 
-  bool get hasFirstAccess => _hasFirstAccess;
+  bool isFirstAccess;
 
-  User(this._hasFirstAccess);
-
-  void setHasFirstAccess(bool hasFirstAccess) {
-    _hasFirstAccess = hasFirstAccess;
-  }
+  User(this.isFirstAccess);
 }
