@@ -8,16 +8,16 @@ class GetUserBloc extends Bloc<GetUserEvent, GetUserState> {
   final UserRepository _repository = UserRepository();
 
   GetUserBloc() : super(InitialGetUserState()) {
-    on<GetUserEvent>((event, emit) {
+    on<GetUserEvent>((event, emit) async {
       try {
-        _repository.getById(event.userId).then(
+        await _repository.getById(event.userId).then(
           (value) {
             final user = UserMapper.fromSnapshot(value);
-            return emit(SuccessGetUserState(user));
+            emit(SuccessGetUserState(user));
           },
         );
       } catch (e) {
-        return emit(ErrorGetUserState(e));
+        emit(ErrorGetUserState(e));
       }
     });
   }
