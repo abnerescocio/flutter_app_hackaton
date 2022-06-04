@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
-import 'package:flutter_app_hackaton/src/sample_feature/sample_item_list_view.dart';
+import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/settings/settings_view.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           if (state is SuccessGetUserState) {
             if (state.user.isFirstAccess) {
-              nextRoute = SampleItemListView.routeName;
+              nextRoute = ConfigurationScreen.routeName;
             } else {
               nextRoute = SettingsView.routeName;
             }

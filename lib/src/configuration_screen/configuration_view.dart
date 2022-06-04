@@ -1,60 +1,115 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
+import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
+import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ConfigurationScreen extends StatelessWidget {
+import '../models/user.dart';
+
+class ConfigurationScreen extends StatefulWidget {
+  static const String routeName = "/config";
   const ConfigurationScreen({Key? key}) : super(key: key);
 
   @override
+  State<ConfigurationScreen> createState() => _ConfigurationScreenState();
+}
+
+class _ConfigurationScreenState extends State<ConfigurationScreen> {
+  late final GetUserBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = GetUserBloc();
+    bloc.add(GetUserEvent("time_10"));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Configurações"),
-          backgroundColor: CustomColors.mainBackground,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(2),
-            child: Container(
-              color: CustomColors.neutralColor70,
-              height: 2,
-            ),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 23, 25, 28),
-        body: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            const SizedBox(height: 24),
-            const InfoRow(info: "Toque nas opções para editar"),
-            const SizedBox(height: 16),
-            const SelectionItem(
-              label: "Tempo da série",
-              time: "00:20",
-              icon_name: "weight_with_clock",
-            ),
-            const SizedBox(height: 8),
-            const SelectionItem(
-                label: "Quantidade de séries", time: "8", icon_name: "weight"),
-            const SizedBox(height: 8),
-            const SelectionItem(
-                label: "Tempo de descanso",
-                time: "00:10",
-                icon_name: "couch-timer"),
-            const SizedBox(height: 8),
-            const SelectionItem(
-                label: "Quantidade de ciclos", time: "1", icon_name: "refresh"),
-            const SizedBox(height: 8),
-            const SelectionItem(
-                label: "Intervalo entre ciclos",
-                time: "00:00",
-                icon_name: "rest-disable"),
-            const SizedBox(height: 8),
-            const SelectionItem(
-                label: "Tempo total",
-                time: "04:00",
-                icon_name: "complete-timer"),
-          ],
-        ));
+    return BlocBuilder<GetUserBloc, GetUserState>(
+        bloc: bloc,
+        builder: (context, state) {
+          late final User? user;
+          if (state is SuccessGetUserState) {
+            user = state.user;
+          } else {
+            user = null;
+          }
+
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text("Configurações"),
+                backgroundColor: CustomColors.mainBackground,
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(2),
+                  child: Container(
+                    color: CustomColors.neutralColor70,
+                    height: 2,
+                  ),
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 23, 25, 28),
+              body: Column(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  const SizedBox(height: 24),
+                  const InfoRow(info: "Toque nas opções para editar"),
+                  const SizedBox(height: 16),
+                  SelectionItem(
+                    label: "Tempo da série",
+                    time: ConverterUtils.toMinutesAndSeconds(
+                      user?.seriesTimeInSeconds,
+                    ),
+                    icon_name: "weight_with_clock",
+                  ),
+                  const SizedBox(height: 8),
+                  SelectionItem(
+                    label: "Quantidade de séries",
+                    time: "${user?.seriesQuantity ?? 0}",
+                    icon_name: "weight",
+                  ),
+                  const SizedBox(height: 8),
+                  SelectionItem(
+                    label: "Tempo de descanso",
+                    time: ConverterUtils.toMinutesAndSeconds(
+                      user?.sleepTimeInSeconds,
+                    ),
+                    icon_name: "couch-timer",
+                  ),
+                  const SizedBox(height: 8),
+                  SelectionItem(
+                    label: "Quantidade de ciclos",
+                    time: "${user?.cycleQuantity ?? 0}",
+                    icon_name: "refresh",
+                  ),
+                  const SizedBox(height: 8),
+                  SelectionItem(
+                    label: "Intervalo entre ciclos",
+                    time: ConverterUtils.toMinutesAndSeconds(
+                      user?.cycleIntervalInSeconds,
+                    ),
+                    icon_name: "rest-disable",
+                  ),
+                  const SizedBox(height: 8),
+                  SelectionItem(
+                    label: "Tempo total",
+                    time: ConverterUtils.toMinutesAndSeconds(
+                      user?.totalTimeInSconds(),
+                    ),
+                    icon_name: "complete-timer",
+                  ),
+                ],
+              ));
+        });
   }
 }
 

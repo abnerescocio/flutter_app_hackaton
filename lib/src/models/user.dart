@@ -18,4 +18,10 @@ class User {
     this.seriesQuantity,
     this.cycleQuantity,
   );
+
+  num totalTimeInSconds() {
+    return ((seriesTimeInSeconds * seriesQuantity) +
+            (sleepTimeInSeconds * (seriesQuantity - 1))) *
+        (cycleQuantity + (cycleIntervalInSeconds * (cycleQuantity - 1)));
+  }
 }
