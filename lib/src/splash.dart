@@ -10,11 +10,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: ListView(
-          children: [
-            // Load a Lottie file from your assets
-            Lottie.asset('assets/lottie/splash_animation.json'),
-          ],
+        body: Center(
+          child: Lottie.asset('assets/lottie/splash_animation.json',
+              width: 190, height: 231, alignment: Alignment.center,),
         ),
       ),
     );
