@@ -39,3 +39,10 @@ flutter:
     - assets/images/
     - assets/lottie/
     - assets/images/icons/
+
+  fonts:
+    # Add fontss from the fonts directory to the application.
+    - family: Lato
+      fonts:
+        - asset: fonts/Lato-Regular.ttf
+          weight: 700
