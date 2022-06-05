@@ -12,9 +12,14 @@ class UserMapper {
   static String fieldSeriesQuantity = "seriesQuantity";
   static String fieldCycleQuantity = "cycleQuantity";
 
-  static toMap(SetUserIsFirstAccessEvent event) {
+  static Map<String, dynamic> toMap(SetUserEvent event) {
     return <String, dynamic>{
-      fieldIsFirstAccess: event.isFirstAccess,
+      fieldIsFirstAccess: event.user.isFirstAccess,
+      fieldSeriesTimeInSeconds: event.user.seriesTimeInSeconds,
+      fieldSleepTimeInSeconds: event.user.sleepTimeInSeconds,
+      fieldCycleIntervalInSeconds: event.user.cycleIntervalInSeconds,
+      fieldSeriesQuantity: event.user.seriesQuantity,
+      fieldCycleQuantity: event.user.cycleQuantity,
     };
   }
 

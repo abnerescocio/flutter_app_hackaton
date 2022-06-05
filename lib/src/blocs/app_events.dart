@@ -10,14 +10,8 @@ class GetUserEvent extends UserEvent {
   GetUserEvent(super.userId);
 }
 
-class SetUserIsFirstAccessEvent extends UserEvent {
-  final bool isFirstAccess;
-
-  SetUserIsFirstAccessEvent(super.userId, this.isFirstAccess);
-}
-
-class AddUserEvent extends UserEvent {
+class SetUserEvent extends UserEvent {
   final User user;
 
-  AddUserEvent(super.userId, this.user);
+  SetUserEvent(super.userId, this.user);
 }

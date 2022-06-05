@@ -17,26 +17,15 @@ class ErrorGetUserState extends GetUserState {
   ErrorGetUserState(this.exception);
 }
 
-// SET USER IS_FIRST_ACCESS
-abstract class SetUserIsFirstAccessState {}
+// SET USER STATE
+abstract class SetUserState {}
 
-class InitialSetUserIsFirstAccessState extends SetUserIsFirstAccessState {}
+class InitialSetUserState extends SetUserState {}
 
-class SuccessSetUserIsFirstAccessState extends SetUserIsFirstAccessState {}
+class SuccessSetUserState extends SetUserState {}
 
-class ErrorSetUserIsFirstAccessState extends SetUserIsFirstAccessState {
+class ErrorSetUserState extends SetUserState {
   final Object exception;
 
-  ErrorSetUserIsFirstAccessState(this.exception);
-}
-
-// ADD USER STATE
-abstract class AddUserState {}
-
-class SuccessAddUserState extends AddUserState {}
-
-class ErrorAddUserState extends AddUserState {
-  final Exception exception;
-
-  ErrorAddUserState(this.exception);
+  ErrorSetUserState(this.exception);
 }

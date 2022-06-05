@@ -18,27 +18,36 @@ class ConfigurationScreen extends StatefulWidget {
 }
 
 class _ConfigurationScreenState extends State<ConfigurationScreen> {
-  late final GetUserBloc bloc;
+  late final GetUserBloc getUserBloc;
+  late final SetUserBloc setUserBloc;
+  User? user;
+
+  num _seriesTimeInSeconds = 0;
+  num _seriesQuantity = 0;
+  num _sleepTimeInSeconds = 0;
+  num _cycleQuantity = 0;
+  num _cycleIntervalInSeconds = 0;
 
   @override
   void initState() {
     super.initState();
-    bloc = GetUserBloc();
-    bloc.add(GetUserEvent("time_10"));
+    getUserBloc = GetUserBloc();
+    getUserBloc.add(GetUserEvent("time_10"));
+
+    setUserBloc = SetUserBloc();
   }
 
   @override
   void dispose() {
     super.dispose();
-    bloc.close();
+    getUserBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetUserBloc, GetUserState>(
-        bloc: bloc,
+        bloc: getUserBloc,
         builder: (context, state) {
-          late final User? user;
           if (state is SuccessGetUserState) {
             user = state.user;
           } else {
@@ -70,12 +79,18 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                       user?.seriesTimeInSeconds,
                     ),
                     icon_name: "weight_with_clock",
+                    callback: (value) {
+                      setState(() {
+                        _seriesTimeInSeconds = value;
+                      });
+                    },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de séries",
                     time: "${user?.seriesQuantity ?? 0}",
                     icon_name: "weight",
+                    callback: (value) {},
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
@@ -84,12 +99,14 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                       user?.sleepTimeInSeconds,
                     ),
                     icon_name: "couch-timer",
+                    callback: (value) {},
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de ciclos",
                     time: "${user?.cycleQuantity ?? 0}",
                     icon_name: "refresh",
+                    callback: (value) {},
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
@@ -98,6 +115,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                       user?.cycleIntervalInSeconds,
                     ),
                     icon_name: "rest-disable",
+                    callback: (value) {},
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
@@ -106,24 +124,30 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                       user?.totalTimeInSconds(),
                     ),
                     icon_name: "complete-timer",
+                    callback: (value) {},
                   ),
                 ],
               ));
         });
   }
+
+  void save() {}
 }
 
 class SelectionItem extends StatefulWidget {
   final String label;
   final String time;
   final String icon_name;
+  final Function(int value) callback;
 
-  const SelectionItem(
-      {Key? key,
-      required this.label,
-      required this.time,
-      required this.icon_name})
-      : super(key: key);
+  const SelectionItem({
+    Key? key,
+    required this.label,
+    required this.time,
+    required this.icon_name,
+    required this.callback,
+  }) : super(key: key);
+
   @override
   _SelectionItemState createState() => _SelectionItemState();
 }

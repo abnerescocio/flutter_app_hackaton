@@ -23,19 +23,18 @@ class GetUserBloc extends Bloc<GetUserEvent, GetUserState> {
   }
 }
 
-class SetUserIsFirstAccessBloc
-    extends Bloc<SetUserIsFirstAccessEvent, SetUserIsFirstAccessState> {
+class SetUserBloc extends Bloc<SetUserEvent, SetUserState> {
   final UserRepository _repository = UserRepository();
 
-  SetUserIsFirstAccessBloc() : super(InitialSetUserIsFirstAccessState()) {
-    on<SetUserIsFirstAccessEvent>((event, emit) async {
+  SetUserBloc() : super(InitialSetUserState()) {
+    on<SetUserEvent>((event, emit) async {
       try {
         final data = UserMapper.toMap(event);
-        await _repository.save(data, event.userId).then((value) {
-          emit(SuccessSetUserIsFirstAccessState());
+        _repository.save(data, event.userId).then((value) {
+          emit(SuccessSetUserState());
         });
       } catch (e) {
-        emit(ErrorSetUserIsFirstAccessState(e));
+        emit(ErrorSetUserState(e));
       }
     });
   }
