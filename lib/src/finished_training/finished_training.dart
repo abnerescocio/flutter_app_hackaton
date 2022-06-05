@@ -16,6 +16,8 @@ import '../pre_training/pre_training.dart';
 import '../themes/custom_colors.dart';
 
 class FinishedTrainingScreen extends StatefulWidget {
+  static const String routreName = "/finishTraining";
+
   const FinishedTrainingScreen({Key? key}) : super(key: key);
 
   @override
@@ -52,195 +54,195 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
           }
 
           return Scaffold(
-            backgroundColor: CustomColors.mainBackground,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(200),
-              child: AppBar(
-                elevation: 0,
-                backgroundColor: CustomColors.primaryPurpleDark,
-                leading: GestureDetector(
-                  onTap: () {
-                    finished(context);
-                  },
-                  child: const Icon(Icons.close),
-                ),
-                flexibleSpace: Column(
-                  children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    const Text(
-                      "Treino finalizado!",
-                      style: TextStyle(
-                        fontSize: 28,
-                        color: CustomColors.neutralColor20,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      children: const [
-                        Spacer(),
-                        VerticalListWidget(
-                          icon: 'weight_white',
-                          value: "20",
-                          label: 'Séries',
-                        ),
-                        SizedBox(
-                          width: 48,
-                        ),
-                        VerticalListWidget(
-                          icon: 'refresh_white',
-                          value: "3",
-                          label: 'Ciclos',
-                        ),
-                        SizedBox(
-                          width: 48,
-                        ),
-                        VerticalListWidget(
-                          icon: 'timer_white',
-                          value: "10",
-                          label: 'Tempo total ',
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 24,
+              backgroundColor: CustomColors.mainBackground,
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(200),
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: CustomColors.primaryPurpleDark,
+                  leading: GestureDetector(
+                    onTap: () {
+                      finished(context);
+                    },
+                    child: const Icon(Icons.close),
                   ),
-                  const Text(
-                    "Como foi seu treino?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Lato-Black',
-                      fontSize: 18,
-                      color: CustomColors.neutralColor20,
-                    ),
-                  ),
-                  Row(
+                  flexibleSpace: Column(
                     children: [
-                      const Spacer(),
-                      TrainingIntensity(
-                        label: "Leve",
-                        iconName: "leve",
-                        callback: () {
-                          setState(() {
-                            _currentIntensity = Intensity.low;
-                          });
-                        },
-                        selected: _currentIntensity == Intensity.low,
-                        bgColor: CustomColors.greenDark,
-                        textColor: CustomColors.green,
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      const Text(
+                        "Treino finalizado!",
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: CustomColors.neutralColor20,
+                        ),
                       ),
                       const SizedBox(
-                        width: 48,
+                        height: 16,
                       ),
-                      TrainingIntensity(
-                          label: "Moderado",
-                          iconName: "moderado",
-                          callback: () {
-                            setState(() {
-                              _currentIntensity = Intensity.mid;
-                            });
-                          },
-                          selected: _currentIntensity == Intensity.mid,
-                          bgColor: CustomColors.primaryPurpleDark,
-                          textColor: CustomColors.primaryPurple),
-                      const SizedBox(
-                        width: 48,
+                      Row(
+                        children: const [
+                          Spacer(),
+                          VerticalListWidget(
+                            icon: 'weight_white',
+                            value: "20",
+                            label: 'Séries',
+                          ),
+                          SizedBox(
+                            width: 48,
+                          ),
+                          VerticalListWidget(
+                            icon: 'refresh_white',
+                            value: "3",
+                            label: 'Ciclos',
+                          ),
+                          SizedBox(
+                            width: 48,
+                          ),
+                          VerticalListWidget(
+                            icon: 'timer_white',
+                            value: "10",
+                            label: 'Tempo total ',
+                          ),
+                          Spacer(),
+                        ],
                       ),
-                      TrainingIntensity(
-                        label: "Intenso",
-                        iconName: "intenso",
-                        callback: () {
-                          setState(() {
-                            _currentIntensity = Intensity.high;
-                          });
-                        },
-                        selected: _currentIntensity == Intensity.high,
-                        bgColor: CustomColors.redDark,
-                        textColor: CustomColors.red,
-                      ),
-                      const Spacer(),
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 30, left: 32, right: 32),
-                    child: Text(
-                      "Deixe aqui mais detalhes:",
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text(
+                      "Como foi seu treino?",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Lato',
+                        fontFamily: 'Lato-Black',
                         fontSize: 18,
                         color: CustomColors.neutralColor20,
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 17,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          onChanged: (text) {
+                    Row(
+                      children: [
+                        const Spacer(),
+                        TrainingIntensity(
+                          label: "Leve",
+                          iconName: "leve",
+                          callback: () {
                             setState(() {
-                              _comment = text;
+                              _currentIntensity = Intensity.low;
                             });
                           },
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.done,
-                          maxLines: 6,
-                          style: const TextStyle(
-                            fontFamily: 'Lato',
-                            fontSize: 14,
-                            color: CustomColors.neutralColor20,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding:
-                            const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-                            fillColor: CustomColors.neutralColor20,
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 14,
-                              color: CustomColors.neutralColor50,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide:
-                              BorderSide(color: CustomColors.neutralColor50),
-                            ),
-                            hintText: 'Conte mais sobre seu treino (opcional)',
-                          ),
+                          selected: _currentIntensity == Intensity.low,
+                          bgColor: CustomColors.greenDark,
+                          textColor: CustomColors.green,
                         ),
+                        const SizedBox(
+                          width: 48,
+                        ),
+                        TrainingIntensity(
+                            label: "Moderado",
+                            iconName: "moderado",
+                            callback: () {
+                              setState(() {
+                                _currentIntensity = Intensity.mid;
+                              });
+                            },
+                            selected: _currentIntensity == Intensity.mid,
+                            bgColor: CustomColors.primaryPurpleDark,
+                            textColor: CustomColors.primaryPurple),
+                        const SizedBox(
+                          width: 48,
+                        ),
+                        TrainingIntensity(
+                          label: "Intenso",
+                          iconName: "intenso",
+                          callback: () {
+                            setState(() {
+                              _currentIntensity = Intensity.high;
+                            });
+                          },
+                          selected: _currentIntensity == Intensity.high,
+                          bgColor: CustomColors.redDark,
+                          textColor: CustomColors.red,
+                        ),
+                        const Spacer(),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  BiggerBaseButton(
-                    text: "Salvar",
-                    onPressed: () {
-                      goToConfiguration(context);
-                    },
-                  )
-                ],
-              ),
-            )
-          );
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 30, left: 32, right: 32),
+                      child: Text(
+                        "Deixe aqui mais detalhes:",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontSize: 18,
+                          color: CustomColors.neutralColor20,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 17,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            onChanged: (text) {
+                              setState(() {
+                                _comment = text;
+                              });
+                            },
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
+                            maxLines: 6,
+                            style: const TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 14,
+                              color: CustomColors.neutralColor20,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 7, horizontal: 15),
+                              fillColor: CustomColors.neutralColor20,
+                              hintStyle: const TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 14,
+                                color: CustomColors.neutralColor50,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    color: CustomColors.neutralColor50),
+                              ),
+                              hintText:
+                                  'Conte mais sobre seu treino (opcional)',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 48,
+                    ),
+                    BiggerBaseButton(
+                      text: "Salvar",
+                      onPressed: () {
+                        goToConfiguration(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
         });
   }
 

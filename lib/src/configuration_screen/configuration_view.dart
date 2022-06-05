@@ -234,7 +234,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   void save() {
     final newUser = UserMapper.fromUser(user);
     setUserBloc.add(SetUserEvent('time_10', newUser));
-    Future.delayed(const Duration(seconds: 1), finished);
+    Future.delayed(const Duration(seconds: 1), goToPreTreining);
   }
 
   void finished() {

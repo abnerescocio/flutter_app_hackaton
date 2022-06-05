@@ -39,6 +39,8 @@ class MyApp extends StatelessWidget {
               case PreTraningScreen.routeName:
                 return const PreTraningScreen();
               case FirstTraingScreen.routeName:
+                return const FirstTraingScreen();
+              case FinishedTrainingScreen.routreName:
                 return const FinishedTrainingScreen();
               case ConfigurationScreen.routeName:
                 return const ConfigurationScreen();
