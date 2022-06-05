@@ -4,6 +4,7 @@ import 'package:flutter_app_hackaton/src/finished_training/finished_training.dar
 import 'package:flutter_app_hackaton/src/first_training/first_traning.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/splash/splash.dart';
+import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -30,7 +31,11 @@ class MyApp extends StatelessWidget {
       ],
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context)!.appTitle,
-      theme: ThemeData(),
+      theme: ThemeData(
+        fontFamily: 'Lato',
+        backgroundColor: CustomColors.mainBackground,
+        primaryColor: CustomColors.primaryPurple,
+      ),
       darkTheme: ThemeData.dark(),
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute<void>(

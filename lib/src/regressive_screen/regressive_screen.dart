@@ -37,7 +37,6 @@ class _RegressiveScreenState extends State<RegressiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColors.mainBackground,
       body: Center(
         child: Text(
           "$_counter",
