@@ -21,7 +21,8 @@ class User {
 
   num totalTimeInSconds() {
     return ((seriesTimeInSeconds * seriesQuantity) +
-            (sleepTimeInSeconds * (seriesQuantity - 1))) *
-        (cycleQuantity + (cycleIntervalInSeconds * (cycleQuantity - 1)));
+                (sleepTimeInSeconds * (seriesQuantity - 1))) *
+            cycleQuantity +
+        (cycleIntervalInSeconds * (cycleQuantity - 1));
   }
 }
