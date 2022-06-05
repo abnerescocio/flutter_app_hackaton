@@ -16,39 +16,36 @@ class VerticalListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 80, left: 39, right: 26),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 16,
-                height: 16,
-                child: SvgPicture.asset(
-                  'assets/images/icons/$icon.svg',
-                ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: SvgPicture.asset(
+                'assets/images/icons/$icon.svg',
               ),
-              const SizedBox(
-                width: 4,
-              ),
-              Text(
-                label,
-                style: const TextStyle(
-                    fontSize: 12, color: CustomColors.neutralColor20),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Text(
-            value,
-            style: const TextStyle(
-                fontSize: 20, color: CustomColors.neutralColor20),
-          ),
-        ],
-      ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            Text(
+              label,
+              style: const TextStyle(
+                  fontSize: 12, color: CustomColors.neutralColor20),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        Text(
+          value,
+          style:
+              const TextStyle(fontSize: 20, color: CustomColors.neutralColor20),
+        ),
+      ],
     );
   }
 }

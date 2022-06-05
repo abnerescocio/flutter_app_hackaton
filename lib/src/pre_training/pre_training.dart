@@ -16,21 +16,25 @@ class PreTraningScreen extends StatelessWidget {
       backgroundColor: CustomColors.mainBackground,
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 80,
           ),
           Row(
             children: const [
               Spacer(),
-              ListWidget(icon: 'weight_white', value: '8', label: 'Séries'),
+              VerticalListWidget(
+                  icon: 'weight_white', value: '8', label: 'Séries'),
               SizedBox(
                 width: 48,
               ),
-              VerticalListWidget(icon: 'weight_white', value: '8', label: 'Séries'),
-              VerticalListWidget(icon: 'refresh_white', value: '1', label: 'Ciclos'),
+              VerticalListWidget(
+                  icon: 'refresh_white', value: '1', label: 'Ciclos'),
+              SizedBox(
+                width: 48,
+              ),
               VerticalListWidget(
                   icon: 'timer_white', value: '4:00', label: 'Tempo total '),
-              Spacer()
+              Spacer(),
             ],
           ),
           const SizedBox(
