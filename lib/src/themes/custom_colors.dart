@@ -13,6 +13,7 @@ class CustomColors {
   static const Color primaryPurple = Color.fromARGB(255, 178, 159, 223);
   static const Color primaryPurpleDark = Color.fromARGB(255, 96, 60, 162);
   static const Color green = Color.fromARGB(255, 110, 186, 94);
-  static const Color red = Color.fromARGB(255, 95, 51, 1);
-  static const Color errorRed = Color.fromARGB(255, 245, 161, 137);
+  static const Color greenDark = Color.fromARGB(255, 80, 166, 63);
+  static const Color red = Color.fromARGB(255, 245, 161, 137);
+  static const Color redDark = Color.fromARGB(255, 255, 95, 51);
 }

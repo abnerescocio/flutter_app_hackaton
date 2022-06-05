@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_hackaton/src/components/training_intensity.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../commons/vertical_list_widget.dart';
@@ -91,6 +92,41 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
               fontSize: 18,
               color: CustomColors.neutralColor20,
             ),
+          ),
+          Row(
+            children: [
+              const Spacer(),
+              TrainingIntensity(
+                label: "Leve",
+                iconName: "leve",
+                callback: () {},
+                selected: true,
+                bgColor: CustomColors.greenDark,
+                textColor: CustomColors.green,
+              ),
+              const SizedBox(
+                width: 48,
+              ),
+              TrainingIntensity(
+                  label: "Moderado",
+                  iconName: "moderado",
+                  callback: () {},
+                  selected: true,
+                  bgColor: CustomColors.primaryPurpleDark,
+                  textColor: CustomColors.primaryPurple),
+              const SizedBox(
+                width: 48,
+              ),
+              TrainingIntensity(
+                label: "Intenso",
+                iconName: "intenso",
+                callback: () {},
+                selected: true,
+                bgColor: CustomColors.redDark,
+                textColor: CustomColors.red,
+              ),
+              const Spacer(),
+            ],
           ),
           const SizedBox(
             height: 8,
