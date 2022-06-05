@@ -82,18 +82,18 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
       case TrainnigStatus.rest:
         return [
           "Descanse",
-          "couch-timer",
+          "couch-timer-green",
           CustomColors.green,
           _restingTimeCount,
           _restingTime
         ];
 
       case TrainnigStatus.preparing:
-        return ["Prepare-se", "couch-timer", CustomColors.green, ""];
+        return ["Prepare-se", "couch-timer-green", CustomColors.green, ""];
       case TrainnigStatus.interval:
         return [
           "Intervalo",
-          "couch-timer",
+          "couch-timer-green",
           CustomColors.green,
           _cyclesIntervalTimeCount,
           _totalCyclesInterval
