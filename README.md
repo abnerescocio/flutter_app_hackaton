@@ -4,11 +4,13 @@
 
 **Contribuidores** 
 
-Pablo Rodrigues
+<img src="assets/images/readme/time-dez.png" width="150">
+
+Abner Escocio
 
 Mateus Nobre
 
-Abner Souza
+Pablo Rodrigues
 
 ***
 
