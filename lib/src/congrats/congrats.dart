@@ -4,7 +4,7 @@ import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:lottie/lottie.dart';
 
 class CongratsScreen extends StatefulWidget {
-  static const String routerName = "/congrats";
+  static const String routeName = "/congrats";
 
   const CongratsScreen({Key? key}) : super(key: key);
 

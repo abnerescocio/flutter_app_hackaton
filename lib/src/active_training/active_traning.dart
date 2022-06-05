@@ -177,7 +177,7 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
         _timer?.cancel();
       });
 
-      Navigator.pushReplacementNamed(context, CongratsScreen.routerName);
+      Navigator.pushReplacementNamed(context, CongratsScreen.routeName);
     }
   }
 

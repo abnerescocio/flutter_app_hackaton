@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
+import 'package:flutter_app_hackaton/src/active_training/active_traning.dart';
+
+import '../themes/custom_colors.dart';
 
 class RegressiveScreen extends StatefulWidget {
   const RegressiveScreen({Key? key}) : super(key: key);
-  static String routeName = "regression-screen";
+
+  static const String routeName = "/regressionScreen";
+
   @override
   State<RegressiveScreen> createState() => _RegressiveScreenState();
 }
@@ -26,7 +29,9 @@ class _RegressiveScreenState extends State<RegressiveScreen> {
     });
   }
 
-  void nextScreen() {}
+  void nextScreen() {
+    Navigator.pushReplacementNamed(context, ActiveTrainingScreen.routeName);
+  }
 
   @override
   void initState() {
@@ -37,6 +42,7 @@ class _RegressiveScreenState extends State<RegressiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: CustomColors.mainBackground,
       body: Center(
         child: Text(
           "$_counter",
