@@ -5,8 +5,10 @@ import 'package:flutter_app_hackaton/src/commons/static_circle_widget.dart';
 import 'package:flutter_app_hackaton/src/commons/vertical_list_widget.dart';
 import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/models/user.dart';
+import 'package:flutter_app_hackaton/src/treining/list_training.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../blocs/app_states.dart';
 import '../components/bigger_base_button.dart';
@@ -94,8 +96,29 @@ class _PreTraningScreenState extends State<PreTraningScreen> {
               BiggerBaseButton(
                 text: "Editar Tabata",
                 onPressed: goToConfiguration,
+              )
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/images/icons/timer_white.svg'),
+                label: 'Tabata',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/images/icons/weight_white.svg'),
+                label: 'Treinos',
               ),
             ],
+            currentIndex: 0,
+            backgroundColor: CustomColors.mainBackground,
+            selectedItemColor: Colors.white,
+            onTap: (int index) {
+              if (index == 1) {
+                Navigator.pushReplacementNamed(
+                    context, ListTrainingScreen.routeName);
+              }
+            },
           ),
         );
       },

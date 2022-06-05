@@ -4,6 +4,7 @@ import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
 import 'package:flutter_app_hackaton/src/models/intensity.dart';
 import 'package:flutter_app_hackaton/src/models/training.dart';
+import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -97,6 +98,28 @@ class _ListTrainingScreenState extends State<ListTrainingScreen> {
                   ),
                   onTap: null,
                 );
+              },
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset('assets/images/icons/timer_white.svg'),
+                  label: 'Tabata',
+                ),
+                BottomNavigationBarItem(
+                  icon:
+                      SvgPicture.asset('assets/images/icons/weight_white.svg'),
+                  label: 'Treinos',
+                ),
+              ],
+              currentIndex: 1,
+              backgroundColor: CustomColors.mainBackground,
+              selectedItemColor: Colors.white,
+              onTap: (int index) {
+                if (index == 0) {
+                  Navigator.pushReplacementNamed(
+                      context, PreTraningScreen.routeName);
+                }
               },
             ),
           );
