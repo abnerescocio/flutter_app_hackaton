@@ -40,6 +40,7 @@ class ActiveTrainingScreen extends StatelessWidget {
             height: 16,
           ),
           const AnimatedCircleWidget(
+            firstIcon: "weight_with_clock",
             circleColor: CustomColors.primaryPurpleDark,
             titleInside: "60",
             subtitleInside: "Exercite",

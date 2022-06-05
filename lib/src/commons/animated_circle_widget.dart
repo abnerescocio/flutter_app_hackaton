@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/commons/one_widget.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../themes/custom_colors.dart';
 
@@ -9,18 +10,21 @@ class AnimatedCircleWidget extends StatelessWidget {
     Key? key,
     required this.circleColor,
     required this.titleInside,
-    required this.subtitleInside,
+    required this.subtitleInside, required this.firstIcon,
   }) : super(key: key);
   final Color circleColor;
   final String titleInside;
   final String subtitleInside;
+  final String firstIcon;
 
   @override
   Widget build(BuildContext context) {
-    late AnimationController controller;
     return Stack(alignment: AlignmentDirectional.center, children: [
       Column(
         children: [
+          SizedBox(
+            child: SvgPicture.asset('assets/images/icons/$firstIcon.svg'),
+          ),
           SizedBox(
             child: Text(titleInside,
                 style: const TextStyle(
