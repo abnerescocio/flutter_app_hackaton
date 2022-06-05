@@ -45,6 +45,8 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
   int _seriesCount = 1;
   int _cyclesIntervalTimeCount = 10;
 
+  bool fetched = false;
+
   bool _isPaused = false;
 
   Timer? _timer;
@@ -239,11 +241,12 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
             _totalSeriesAmount = state.user.seriesQuantity.toInt();
             _totalCyclesInterval = state.user.cycleIntervalInSeconds.toInt();
 
-            _trainningTimeCount = _trainningTime;
-            _restingTimeCount = _restingTime;
-            _cyclesCount = 1;
-            _seriesCount = 1;
-            _cyclesIntervalTimeCount = _totalCyclesInterval;
+            if (!fetched) {
+              _restingTimeCount = _restingTime;
+              _trainningTimeCount = _trainningTime;
+              _cyclesIntervalTimeCount = _totalCyclesInterval;
+            }
+            fetched = true;
           }
 
           return Scaffold(
