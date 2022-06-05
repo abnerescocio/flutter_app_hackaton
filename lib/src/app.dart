@@ -73,10 +73,8 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case PreTraningScreen.routeName:
                     return const PreTraningScreen();
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
                   case ConfigurationScreen.routeName:
-                    return const ActiveTrainingScreen();
+                    return const ConfigurationScreen();
                   default:
                     return const SplashScreen();
                 }

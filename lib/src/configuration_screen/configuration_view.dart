@@ -3,7 +3,6 @@ import 'package:flutter_app_hackaton/src/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
-import 'package:flutter_app_hackaton/src/components/selection_wheel.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
@@ -83,8 +82,8 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
               appBar: AppBar(
                 title: const Text("Configurações"),
                 leading: GestureDetector(
-                  child: const Icon(Icons.close),
                   onTap: finished,
+                  child: const Icon(Icons.close),
                 ),
                 backgroundColor: CustomColors.mainBackground,
                 bottom: PreferredSize(
@@ -106,7 +105,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     label: "Tempo da série",
                     time:
                         ConverterUtils.toMinutesAndSeconds(seriesTimeInSeconds),
-                    icon_name: "weight_with_clock",
+                    iconName: "weight_with_clock",
                     callback: () {
                       _showDialog(
                         WheelTimeSelector(
@@ -125,7 +124,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   SelectionItem(
                     label: "Quantidade de séries",
                     time: "$seriesQuantity",
-                    icon_name: "weight",
+                    iconName: "weight",
                     callback: () {
                       _showDialog(
                         WheelAmountSelector(
@@ -146,7 +145,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     time: ConverterUtils.toMinutesAndSeconds(
                       sleepTimeInSeconds,
                     ),
-                    icon_name: "couch-timer",
+                    iconName: "couch-timer",
                     callback: () {
                       _showDialog(WheelTimeSelector(
                         callback: (seconds) {
@@ -163,7 +162,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   SelectionItem(
                     label: "Quantidade de ciclos",
                     time: "${cycleQuantity}",
-                    icon_name: "refresh",
+                    iconName: "refresh",
                     callback: () {
                       _showDialog(WheelAmountSelector(
                           value: cycleQuantity.toInt(),
@@ -180,7 +179,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     label: "Intervalo entre ciclos",
                     time: ConverterUtils.toMinutesAndSeconds(
                         cycleIntervalInSeconds),
-                    icon_name: "rest-disable",
+                    iconName: "rest-disable",
                     callback: () {
                       _showDialog(WheelTimeSelector(
                         callback: (seconds) {
@@ -199,7 +198,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     time: ConverterUtils.toMinutesAndSeconds(
                       user?.totalTimeInSconds(),
                     ),
-                    icon_name: "complete-timer",
+                    iconName: "complete-timer",
                     callback: () {},
                   ),
                   const Spacer(),
@@ -220,9 +219,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
       user?.cycleQuantity ?? 0,
     );
     setUserBloc.add(SetUserEvent('time_10', newUser));
-    Future.delayed(Duration(seconds: 3), () {
-      finished();
-    });
+    Future.delayed(const Duration(seconds: 1), finished);
   }
 
   void finished() {
@@ -233,22 +230,22 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
 class SelectionItem extends StatefulWidget {
   final String label;
   final String time;
-  final String icon_name;
+  final String iconName;
   final Function() callback;
 
   const SelectionItem({
     Key? key,
     required this.label,
     required this.time,
-    required this.icon_name,
+    required this.iconName,
     required this.callback,
   }) : super(key: key);
 
   @override
-  _SelectionItemState createState() => _SelectionItemState();
+  SelectionItemState createState() => SelectionItemState();
 }
 
-class _SelectionItemState extends State<SelectionItem> {
+class SelectionItemState extends State<SelectionItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -265,10 +262,12 @@ class _SelectionItemState extends State<SelectionItem> {
             children: [
               const SizedBox(width: 16),
               SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: SvgPicture.asset(
-                      "assets/images/icons/${widget.icon_name}.svg")),
+                height: 24,
+                width: 24,
+                child: SvgPicture.asset(
+                  "assets/images/icons/${widget.iconName}.svg",
+                ),
+              ),
               const SizedBox(width: 8),
               Text(
                 widget.label,
@@ -293,9 +292,10 @@ class InfoRow extends StatelessWidget {
       children: [
         const SizedBox(width: 16),
         SizedBox(
-            height: 16,
-            width: 16,
-            child: SvgPicture.asset("assets/images/icons/Info_fill.svg")),
+          height: 16,
+          width: 16,
+          child: SvgPicture.asset("assets/images/icons/Info_fill.svg"),
+        ),
         const SizedBox(width: 8),
         Text(info, style: const TextStyle(color: Colors.white))
       ],
