@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_hackaton/src/active_training/active_traning.dart';
 import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/splash.dart';
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case ConfigurationScreen.routeName:
-                    return const ConfigurationScreen();
+                    return const ActiveTrainingScreen();
                   default:
                     return const SplashScreen();
                 }
