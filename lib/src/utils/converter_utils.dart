@@ -6,4 +6,8 @@ class ConverterUtils {
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
+
+  static int toSeconds(int minutes, int seconds) {
+    return Duration(minutes: minutes, seconds: seconds).inSeconds;
+  }
 }

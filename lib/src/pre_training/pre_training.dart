@@ -31,7 +31,10 @@ class PreTraningScreen extends StatelessWidget {
           const SizedBox(
             height: 75,
           ),
-          BaseButton(text: "Editar Tabata"),
+          BaseButton(
+            text: "Editar Tabata",
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -40,10 +43,10 @@ class PreTraningScreen extends StatelessWidget {
 
 class CircleWidget extends StatelessWidget {
   const CircleWidget({
-    Key? key, required this.circleColor,
+    Key? key,
+    required this.circleColor,
   }) : super(key: key);
   final Color circleColor;
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +56,14 @@ class CircleWidget extends StatelessWidget {
           SizedBox(
             height: 50,
             width: 50,
-            child:SvgPicture.asset('assets/images/icons/play.svg'),
+            child: SvgPicture.asset('assets/images/icons/play.svg'),
           ),
           const SizedBox(
             height: 23,
           ),
           const Text(
             "Toque para iniciar",
-            style: TextStyle(
-                fontSize: 18, color: CustomColors.neutralColor20),
+            style: TextStyle(fontSize: 18, color: CustomColors.neutralColor20),
           ),
         ],
       ),
@@ -80,8 +82,7 @@ class CircleWidget extends StatelessWidget {
         width: 268,
         child: Container(
           decoration: BoxDecoration(
-            border:
-                Border.all(color: circleColor, width: 10),
+            border: Border.all(color: circleColor, width: 10),
             borderRadius: BorderRadius.circular(140),
           ),
         ),

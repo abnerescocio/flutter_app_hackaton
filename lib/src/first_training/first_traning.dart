@@ -14,7 +14,8 @@ class FirstTraingScreen extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            child: SvgPicture.asset('assets/images/icons/Tabata-training.svg', fit: BoxFit.fill),
+            child: SvgPicture.asset('assets/images/icons/Tabata-training.svg',
+                fit: BoxFit.fill),
           ),
           const SizedBox(
             height: 32,
@@ -44,7 +45,10 @@ class FirstTraingScreen extends StatelessWidget {
           const SizedBox(
             height: 48,
           ),
-          BaseButton(text: "Criar Tabata")
+          BaseButton(
+            text: "Criar Tabata",
+            onPressed: () {},
+          )
         ],
       ),
     );
