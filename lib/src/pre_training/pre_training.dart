@@ -103,6 +103,6 @@ class _PreTraningScreenState extends State<PreTraningScreen> {
   }
 
   void goToConfiguration() {
-    Navigator.restorablePushNamed(context, ConfigurationScreen.routeName);
+    Navigator.pushNamed(context, ConfigurationScreen.routeName);
   }
 }
