@@ -22,8 +22,11 @@ class AnimatedCircleWidget extends StatelessWidget {
     return Stack(alignment: AlignmentDirectional.center, children: [
       Column(
         children: [
-          SizedBox(
-            child: SvgPicture.asset('assets/images/icons/$firstIcon.svg'),
+          Padding(
+            padding:  EdgeInsets.only(bottom: 42),
+            child: SizedBox(
+              child: SvgPicture.asset('assets/images/icons/$firstIcon.svg'),
+            ),
           ),
           SizedBox(
             child: Text(titleInside,
