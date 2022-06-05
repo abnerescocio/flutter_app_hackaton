@@ -6,8 +6,12 @@ import 'package:flutter_app_hackaton/src/commons/animated_circle_widget.dart';
 import 'package:flutter_app_hackaton/src/commons/one_widget.dart';
 import 'package:flutter_app_hackaton/src/components/leave_feature.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../blocs/app_blocs.dart';
+import '../blocs/app_events.dart';
+import '../blocs/app_states.dart';
 import '../commons/music_buttons.dart';
 import '../themes/custom_colors.dart';
 import '../utils/converter_utils.dart';
@@ -24,14 +28,15 @@ class ActiveTrainingScreen extends StatefulWidget {
 }
 
 class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
-  TrainnigStatus _trainnigStatus = TrainnigStatus.trainning;
-  bool _isPaused = false;
+  late final GetUserBloc getUserBloc;
 
-  final int _trainningTime = 5;
-  final int _restingTime = 5;
-  final int _totalCyclesAmount = 2;
-  final int _totalSeriesAmount = 2;
-  final int _totalCyclesInterval = 10;
+  TrainnigStatus _trainnigStatus = TrainnigStatus.trainning;
+
+  int _trainningTime = 5;
+  int _restingTime = 5;
+  int _totalCyclesAmount = 2;
+  int _totalSeriesAmount = 2;
+  int _totalCyclesInterval = 10;
 
   int _trainningTimeCount = 4;
   int _restingTimeCount = 5;
@@ -40,7 +45,26 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
   int _seriesCount = 1;
   int _cyclesIntervalTimeCount = 10;
 
+  bool _isPaused = false;
+
   Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserBloc = GetUserBloc();
+    getUserBloc.add(GetUserEvent("time_10"));
+
+    _trainningTimeCount = _trainningTime;
+    _restingTimeCount = _restingTime;
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    getUserBloc.close();
+  }
 
   List getStatusViewModel(TrainnigStatus status) {
     switch (status) {
@@ -202,115 +226,127 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _trainningTimeCount = _trainningTime;
-    _restingTimeCount = _restingTime;
-    startTimer();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var info = getStatusViewModel(_trainnigStatus);
 
-    return Scaffold(
-      backgroundColor: CustomColors.mainBackground,
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 48,
-          ),
-          Row(
-            children: [
-              Spacer(),
-              SvgPicture.asset('assets/images/icons/sound_mute_light.svg'),
-              const SizedBox(
-                width: 27,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              OneWidget(
-                icon: 'refresh_white',
-                label: '$_cyclesCount/$_totalCyclesAmount',
-                topMargin: 65,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          AnimatedCircleWidget(
-            firstIcon: info[1],
-            circleColor: info[2],
-            titleInside: "${info[3]}",
-            subtitleInside: info[0],
-            seriesCount: '$_seriesCount',
-            seriesAmountTotal: '$_totalSeriesAmount',
-            progressValue1: info[3] / info[4],
-            progressValuer2: seriesProgress(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          OneWidget(
-              icon: "timer",
-              label: "${ConverterUtils.toMinutesAndSeconds(_totalTimeCount)} ",
-              topMargin: 20),
-          const SizedBox(
-            height: 70,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  _showDialog(LeaveFeatureAlert(yes: () {
-                    Navigator.pushReplacementNamed(
-                        context, PreTraningScreen.routeName);
-                  }, no: () {
-                    Navigator.pop(context);
-                  }));
-                },
-                child: const MusicButtons(
-                  backGround: "outlined_ellipse",
-                  playerIcon: "stop",
-                  width: 56,
-                  height: 56,
+    return BlocBuilder(
+        bloc: getUserBloc,
+        builder: (context, state) {
+          if (state is SuccessGetUserState) {
+            _trainningTime = state.user.seriesTimeInSeconds.toInt();
+            _restingTime = state.user.sleepTimeInSeconds.toInt();
+            _totalCyclesAmount = state.user.cycleQuantity.toInt();
+            _totalSeriesAmount = state.user.seriesQuantity.toInt();
+            _totalCyclesInterval = state.user.cycleIntervalInSeconds.toInt();
+
+            _trainningTimeCount = _trainningTime;
+            _restingTimeCount = _restingTime;
+            _cyclesCount = 1;
+            _seriesCount = 1;
+            _cyclesIntervalTimeCount = _totalCyclesInterval;
+          }
+
+          return Scaffold(
+            backgroundColor: CustomColors.mainBackground,
+            body: Column(
+              children: [
+                const SizedBox(
+                  height: 48,
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              GestureDetector(
-                child: MusicButtons(
-                  backGround: "elipse",
-                  playerIcon: _isPaused ? "play_black" : "pause",
-                  width: 72,
-                  height: 72,
+                Row(
+                  children: [
+                    const Spacer(),
+                    SvgPicture.asset(
+                        'assets/images/icons/sound_mute_light.svg'),
+                    const SizedBox(
+                      width: 27,
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  setState(() {
-                    _isPaused = !_isPaused;
-                    _isPaused ? _timer?.cancel() : startTimer();
-                  });
-                },
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              const MusicButtons(
-                backGround: "outlined_ellipse",
-                playerIcon: "forwad",
-                width: 56,
-                height: 56,
-              ),
-              const Spacer()
-            ],
-          ),
-        ],
-      ),
-    );
+                Row(
+                  children: [
+                    OneWidget(
+                      icon: 'refresh_white',
+                      label: '$_cyclesCount/$_totalCyclesAmount',
+                      topMargin: 65,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                AnimatedCircleWidget(
+                  firstIcon: info[1],
+                  circleColor: info[2],
+                  titleInside: "${info[3]}",
+                  subtitleInside: info[0],
+                  seriesCount: '$_seriesCount',
+                  seriesAmountTotal: '$_totalSeriesAmount',
+                  progressValue1: info[3] / info[4],
+                  progressValuer2: seriesProgress(),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                OneWidget(
+                    icon: "timer",
+                    label:
+                        "${ConverterUtils.toMinutesAndSeconds(_totalTimeCount)} ",
+                    topMargin: 20),
+                const SizedBox(
+                  height: 70,
+                ),
+                Row(
+                  children: [
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        _showDialog(LeaveFeatureAlert(yes: () {
+                          Navigator.pushReplacementNamed(
+                              context, PreTraningScreen.routeName);
+                        }, no: () {
+                          Navigator.pop(context);
+                        }));
+                      },
+                      child: const MusicButtons(
+                        backGround: "outlined_ellipse",
+                        playerIcon: "stop",
+                        width: 56,
+                        height: 56,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    GestureDetector(
+                      child: MusicButtons(
+                        backGround: "elipse",
+                        playerIcon: _isPaused ? "play_black" : "pause",
+                        width: 72,
+                        height: 72,
+                      ),
+                      onTap: () {
+                        setState(() {
+                          _isPaused = !_isPaused;
+                          _isPaused ? _timer?.cancel() : startTimer();
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    const MusicButtons(
+                      backGround: "outlined_ellipse",
+                      playerIcon: "forwad",
+                      width: 56,
+                      height: 56,
+                    ),
+                    const Spacer()
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
