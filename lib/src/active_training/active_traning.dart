@@ -4,6 +4,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/commons/animated_circle_widget.dart';
 import 'package:flutter_app_hackaton/src/commons/one_widget.dart';
+import 'package:flutter_app_hackaton/src/components/leave_feature.dart';
+import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../commons/music_buttons.dart';
@@ -77,7 +79,7 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
     showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) => Container(
-              height: 312,
+              height: 360,
               padding: const EdgeInsets.only(top: 6.0),
               // The Bottom margin is provided to align the popup above the system navigation bar.
               margin: EdgeInsets.only(
@@ -264,12 +266,12 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  _showDialog(
-                    const SizedBox(
-                      height: 100,
-                      width: 100,
-                    ),
-                  );
+                  _showDialog(LeaveFeatureAlert(yes: () {
+                    Navigator.pushReplacementNamed(
+                        context, PreTraningScreen.routeName);
+                  }, no: () {
+                    Navigator.pop(context);
+                  }));
                 },
                 child: const MusicButtons(
                   backGround: "outlined_ellipse",

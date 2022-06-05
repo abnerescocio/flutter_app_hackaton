@@ -5,14 +5,13 @@ import '../themes/custom_colors.dart';
 import 'base_button.dart';
 
 class LeaveFeatureAlert extends StatelessWidget {
-  const LeaveFeatureAlert({
-    Key? key,
-    required this.yes,
-    required this.no,
-  }) : super(key: key);
+  const LeaveFeatureAlert(
+      {Key? key, required this.yes, required this.no, this.message})
+      : super(key: key);
 
   final Function() yes;
   final Function() no;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +34,10 @@ class LeaveFeatureAlert extends StatelessWidget {
             color: CustomColors.neutralColor20,
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 8, left: 65, right: 65),
           child: Text(
-            "Ao sair, as alterações realizadas não serão salvas.",
+            message ?? "Ao sair, as alterações realizadas não serão salvas.",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Lato',
