@@ -10,6 +10,7 @@ class VerticalListWidget extends StatelessWidget {
     required this.label,
     required this.value,
   }) : super(key: key);
+
   final String icon;
   final String label;
   final String value;

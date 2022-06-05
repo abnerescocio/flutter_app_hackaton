@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_hackaton/src/base_button.dart';
+import 'package:flutter_app_hackaton/src/components/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
@@ -161,35 +161,43 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de ciclos",
-                    time: "${cycleQuantity}",
+                    time: "$cycleQuantity",
                     iconName: "refresh",
                     callback: () {
-                      _showDialog(WheelAmountSelector(
+                      _showDialog(
+                        WheelAmountSelector(
                           value: cycleQuantity.toInt(),
                           callback: (value) {
                             Navigator.pop(context);
                             setState(() {
                               user?.cycleQuantity = value;
                             });
-                          }));
+                          },
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
+                    enabled: (user?.cycleQuantity ?? 0) > 1,
                     label: "Intervalo entre ciclos",
                     time: ConverterUtils.toMinutesAndSeconds(
                         cycleIntervalInSeconds),
-                    iconName: "rest-disable",
+                    iconName: (user?.cycleQuantity ?? 0) > 1
+                        ? "rest"
+                        : "rest-disable",
                     callback: () {
-                      _showDialog(WheelTimeSelector(
-                        callback: (seconds) {
-                          Navigator.pop(context);
-                          setState(() {
-                            user?.cycleIntervalInSeconds = seconds;
-                          });
-                        },
-                        value: cycleIntervalInSeconds.toInt(),
-                      ));
+                      _showDialog(
+                        WheelTimeSelector(
+                          callback: (seconds) {
+                            Navigator.pop(context);
+                            setState(() {
+                              user?.cycleIntervalInSeconds = seconds;
+                            });
+                          },
+                          value: cycleIntervalInSeconds.toInt(),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
@@ -223,7 +231,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   }
 
   void finished() {
-    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
+    Navigator.pushNamed(context, PreTraningScreen.routeName);
   }
 }
 
@@ -232,8 +240,10 @@ class SelectionItem extends StatefulWidget {
   final String time;
   final String iconName;
   final Function() callback;
+  final bool enabled;
 
   const SelectionItem({
+    this.enabled = true,
     Key? key,
     required this.label,
     required this.time,
@@ -249,9 +259,11 @@ class SelectionItemState extends State<SelectionItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          widget.callback();
-        },
+        onTap: widget.enabled
+            ? () {
+                widget.callback();
+              }
+            : null,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           height: 56,
@@ -271,10 +283,15 @@ class SelectionItemState extends State<SelectionItem> {
               const SizedBox(width: 8),
               Text(
                 widget.label,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: widget.enabled ? Colors.white : Colors.grey),
               ),
               const Spacer(),
-              Text(widget.time, style: const TextStyle(color: Colors.white)),
+              Text(
+                widget.time,
+                style: TextStyle(
+                    color: widget.enabled ? Colors.white : Colors.grey),
+              ),
               const SizedBox(width: 16)
             ],
           ),

@@ -9,6 +9,7 @@ class MusicButtons extends StatelessWidget {
     required this.width,
     required this.height,
   }) : super(key: key);
+
   final String backGround;
   final String playerIcon;
   final double width;

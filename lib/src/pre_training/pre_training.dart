@@ -8,7 +8,7 @@ import 'package:flutter_app_hackaton/src/models/user.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../base_button.dart';
+import '../components/base_button.dart';
 import '../blocs/app_states.dart';
 import '../themes/custom_colors.dart';
 
@@ -103,6 +103,6 @@ class _PreTraningScreenState extends State<PreTraningScreen> {
   }
 
   void goToConfiguration() {
-    Navigator.restorablePushNamed(context, ConfigurationScreen.routeName);
+    Navigator.pushNamed(context, ConfigurationScreen.routeName);
   }
 }
