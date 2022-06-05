@@ -88,6 +88,10 @@ class TrainingMapper {
     final dynamic data = snapshot.data();
 
     final String comment = data[fieldComment] ?? "";
+    final String intensityStr =
+        data[fieldIntensity] ?? Intensity.high.toString();
+    final Intensity intensity = Intensity.values
+        .firstWhere((element) => element.toString() == intensityStr);
 
     final num seriesTimeInSeconds = data[fieldSeriesTimeInSeconds] ?? 20;
     final num sleepTimeInSeconds = data[fieldSleepTimeInSeconds] ?? 10;
@@ -98,7 +102,7 @@ class TrainingMapper {
 
     return Training(
       comment,
-      Intensity.high,
+      intensity,
       DateTime.now(),
       seriesTimeInSeconds,
       sleepTimeInSeconds,
