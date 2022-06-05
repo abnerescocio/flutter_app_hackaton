@@ -161,7 +161,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de ciclos",
-                    time: "${cycleQuantity}",
+                    time: "$cycleQuantity",
                     iconName: "refresh",
                     callback: () {
                       _showDialog(WheelAmountSelector(

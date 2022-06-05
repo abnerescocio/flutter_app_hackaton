@@ -1,32 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/base_button.dart';
+import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
+import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class FirstTraingScreen extends StatelessWidget {
+  static const String routeName = "/first";
   const FirstTraingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColors.mainBackground,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(300),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: CustomColors.mainBackground,
+          leading: GestureDetector(
+            onTap: () {
+              finished(context);
+            },
+            child: const Icon(Icons.close),
+          ),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: Svg('assets/images/icons/Tabata-training.svg'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Column(
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: SvgPicture.asset('assets/images/icons/Tabata-training.svg',
-                fit: BoxFit.fill),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
           const Text(
             "Vamos começar o seu primeiro Treino Tabata?",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontFamily: 'Lato-Black',
-                fontSize: 20,
-                color: CustomColors.neutralColor20),
+              fontFamily: 'Lato-Black',
+              fontSize: 20,
+              color: CustomColors.neutralColor20,
+            ),
           ),
           const SizedBox(
             height: 8,
@@ -37,9 +54,10 @@ class FirstTraingScreen extends StatelessWidget {
               "No próximo passo você vai criar o Tabata ideal para o seu treino.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontSize: 14,
-                  color: CustomColors.neutralColor20),
+                fontFamily: 'Lato',
+                fontSize: 14,
+                color: CustomColors.neutralColor20,
+              ),
             ),
           ),
           const SizedBox(
@@ -47,10 +65,20 @@ class FirstTraingScreen extends StatelessWidget {
           ),
           BaseButton(
             text: "Criar Tabata",
-            onPressed: () {},
+            onPressed: () {
+              goToConfiguration(context);
+            },
           )
         ],
       ),
     );
+  }
+
+  void goToConfiguration(BuildContext context) {
+    Navigator.pushNamed(context, ConfigurationScreen.routeName);
+  }
+
+  void finished(BuildContext context) {
+    Navigator.pushNamed(context, PreTraningScreen.routeName);
   }
 }

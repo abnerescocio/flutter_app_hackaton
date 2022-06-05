@@ -20,6 +20,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^1.1.0
+  flutter_svg_provider: ^1.0.3
   numberpicker: ^2.1.1
   flutter_picker: ^2.0.3
 
