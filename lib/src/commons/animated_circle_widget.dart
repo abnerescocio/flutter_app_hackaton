@@ -12,11 +12,15 @@ class AnimatedCircleWidget extends StatelessWidget {
     required this.titleInside,
     required this.subtitleInside,
     required this.firstIcon,
+    required this.seriesAmountTotal,
+    required this.seriesCount,
   }) : super(key: key);
   final Color circleColor;
   final String titleInside;
   final String subtitleInside;
   final String firstIcon;
+  final String seriesAmountTotal;
+  final String seriesCount;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +45,9 @@ class AnimatedCircleWidget extends StatelessWidget {
             subtitleInside,
             style: TextStyle(fontSize: 18, color: CustomColors.neutralColor20),
           ),
-          const OneWidget(
+          OneWidget(
             icon: 'weight_white',
-            label: "20/20",
+            label: "$seriesCount/$seriesAmountTotal",
             topMargin: 30,
           )
         ],
