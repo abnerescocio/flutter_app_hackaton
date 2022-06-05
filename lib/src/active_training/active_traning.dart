@@ -73,6 +73,26 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
     }
   }
 
+  void _showDialog(Widget child) {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) => Container(
+              height: 312,
+              padding: const EdgeInsets.only(top: 6.0),
+              // The Bottom margin is provided to align the popup above the system navigation bar.
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              // Provide a background color for the popup.
+              color: CustomColors.mainBackground,
+              // Use a SafeArea widget to avoid system overlaps.
+              child: SafeArea(
+                top: false,
+                child: child,
+              ),
+            ));
+  }
+
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       timeStep();
@@ -242,11 +262,21 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
           Row(
             children: [
               const Spacer(),
-              const MusicButtons(
-                backGround: "outlined_ellipse",
-                playerIcon: "stop",
-                width: 56,
-                height: 56,
+              GestureDetector(
+                onTap: () {
+                  _showDialog(
+                    const SizedBox(
+                      height: 100,
+                      width: 100,
+                    ),
+                  );
+                },
+                child: const MusicButtons(
+                  backGround: "outlined_ellipse",
+                  playerIcon: "stop",
+                  width: 56,
+                  height: 56,
+                ),
               ),
               const SizedBox(
                 width: 16,
