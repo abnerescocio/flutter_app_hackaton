@@ -33,29 +33,29 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
             child: const Icon(Icons.close),
           ),
           flexibleSpace: Column(
-            children:  [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 80,
               ),
-              Text(
+              const Text(
                 "Treino finalizado!",
                 style: TextStyle(
                   fontSize: 28,
                   color: CustomColors.neutralColor20,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Row(
-                children: [
-                  const Spacer(),
+                children: const [
+                  Spacer(),
                   VerticalListWidget(
                     icon: 'weight_white',
                     value: "20",
                     label: 'Séries',
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 48,
                   ),
                   VerticalListWidget(
@@ -63,7 +63,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                     value: "3",
                     label: 'Ciclos',
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 48,
                   ),
                   VerticalListWidget(
@@ -71,7 +71,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                     value: "10",
                     label: 'Tempo total ',
                   ),
-                  const Spacer(),
+                  Spacer(),
                 ],
               ),
             ],
@@ -108,10 +108,31 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
             ),
           ),
           const SizedBox(
+            height: 17,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                fillColor: CustomColors.neutralColor20,
+                hintStyle: const TextStyle(
+                  fontFamily: 'Lato',
+                  fontSize: 14,
+                  color: CustomColors.neutralColor50,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: CustomColors.neutralColor50),
+                ),
+                hintText: 'Conte mais sobre seu treino (opcional)',
+              ),
+            ),
+          ),
+          const SizedBox(
             height: 48,
           ),
           BaseButton(
-            text: "Criar Tabata",
+            text: "Salvar",
             onPressed: () {
               goToConfiguration(context);
             },
