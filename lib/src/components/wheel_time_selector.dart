@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_hackaton/src/components/selection_wheel.dart';
-import '../base_button.dart';
+import 'base_button.dart';
 import '../utils/converter_utils.dart';
 
 class WheelTimeSelector extends StatefulWidget {
@@ -52,34 +51,31 @@ class _WheelTimeSelectorState extends State<WheelTimeSelector> {
           });
         });
 
-    return Container(
-      child: Column(
-        children: [
-          const SizedBox(height: 14),
-          const Text("Tempo da série",
-              style: TextStyle(fontSize: 18, color: Colors.white)),
-          const SizedBox(height: 18),
-          Row(children: [
-            const Spacer(),
-            wheel1,
-            const SizedBox(width: 11),
-            const Text(":",
-                style: TextStyle(fontSize: 24, color: Colors.white)),
-            SizedBox(width: 11),
-            wheel2,
-            const Spacer(),
-          ]),
-          const SizedBox(height: 32),
-          BaseButton(
-            text: "Selecionar",
-            onPressed: () {
-              widget.callback(
-                ConverterUtils.toSeconds(_minutesNewValue, _secondsNewValue),
-              );
-            },
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(height: 14),
+        const Text("Tempo da série",
+            style: TextStyle(fontSize: 18, color: Colors.white)),
+        const SizedBox(height: 18),
+        Row(children: [
+          const Spacer(),
+          wheel1,
+          const SizedBox(width: 11),
+          const Text(":", style: TextStyle(fontSize: 24, color: Colors.white)),
+          const SizedBox(width: 11),
+          wheel2,
+          const Spacer(),
+        ]),
+        const SizedBox(height: 32),
+        BaseButton(
+          text: "Selecionar",
+          onPressed: () {
+            widget.callback(
+              ConverterUtils.toSeconds(_minutesNewValue, _secondsNewValue),
+            );
+          },
+        )
+      ],
     );
   }
 }
