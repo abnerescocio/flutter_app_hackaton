@@ -3,12 +3,14 @@ import 'package:flutter_app_hackaton/src/components/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
+import 'package:flutter_app_hackaton/src/data/mappers.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../components/leave_feature.dart';
 import '../components/wheel_amount_selector.dart';
 import '../components/wheel_time_selector.dart';
 import '../models/user.dart';
@@ -25,6 +27,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   late final GetUserBloc getUserBloc;
   late final SetUserBloc setUserBloc;
   User? user;
+  bool _hasChanges = false;
 
   @override
   void initState() {
@@ -41,24 +44,22 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
     getUserBloc.close();
   }
 
-  void _showDialog(Widget child) {
+  void _showDialog(Widget child, {double height = 322}) {
     showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) => Container(
-              height: 312,
-              padding: const EdgeInsets.only(top: 6.0),
-              // The Bottom margin is provided to align the popup above the system navigation bar.
-              margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              // Provide a background color for the popup.
-              color: CustomColors.mainBackground,
-              // Use a SafeArea widget to avoid system overlaps.
-              child: SafeArea(
-                top: false,
-                child: child,
-              ),
-            ));
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: height,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        color: CustomColors.mainBackground,
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
   }
 
   @override
@@ -112,6 +113,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                           callback: (seconds) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.seriesTimeInSeconds = seconds;
                             });
                           },
@@ -132,7 +134,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                             callback: (value) {
                               Navigator.pop(context);
                               setState(() {
-                                // _seriesQuantity = value;
+                                _hasChanges = true;
                                 user?.seriesQuantity = value;
                               });
                             }),
@@ -151,6 +153,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                         callback: (seconds) {
                           Navigator.pop(context);
                           setState(() {
+                            _hasChanges = true;
                             user?.sleepTimeInSeconds = seconds;
                           });
                         },
@@ -170,6 +173,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                           callback: (value) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.cycleQuantity = value;
                             });
                           },
@@ -186,12 +190,19 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     iconName: (user?.cycleQuantity ?? 0) > 1
                         ? "rest"
                         : "rest-disable",
+                    bgColor: (user?.cycleQuantity ?? 0) > 1
+                        ? CustomColors.neutralColor90
+                        : CustomColors.neutralColor100,
+                    strokeColor: (user?.cycleQuantity ?? 0) > 1
+                        ? CustomColors.neutralColor90
+                        : CustomColors.neutralColor100,
                     callback: () {
                       _showDialog(
                         WheelTimeSelector(
                           callback: (seconds) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.cycleIntervalInSeconds = seconds;
                             });
                           },
@@ -208,6 +219,9 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     ),
                     iconName: "complete-timer",
                     callback: () {},
+                    textColor: CustomColors.primaryPurple,
+                    bgColor: CustomColors.mainBackground,
+                    strokeColor: CustomColors.neutralColor80,
                   ),
                   const Spacer(),
                   BaseButton(text: "Salvar", onPressed: save),
@@ -218,20 +232,31 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   }
 
   void save() {
-    final newUser = User(
-      true,
-      user?.seriesTimeInSeconds ?? 0,
-      user?.sleepTimeInSeconds ?? 0,
-      user?.cycleIntervalInSeconds ?? 0,
-      user?.seriesQuantity ?? 0,
-      user?.cycleQuantity ?? 0,
-    );
+    final newUser = UserMapper.fromUser(user);
     setUserBloc.add(SetUserEvent('time_10', newUser));
     Future.delayed(const Duration(seconds: 1), finished);
   }
 
   void finished() {
-    Navigator.pushNamed(context, PreTraningScreen.routeName);
+    if (_hasChanges) {
+      _showDialog(
+        LeaveFeatureAlert(
+          yes: () {
+            goToPreTreining();
+          },
+          no: () {
+            Navigator.pop(context);
+          },
+        ),
+        height: 360,
+      );
+    } else {
+      goToPreTreining();
+    }
+  }
+
+  void goToPreTreining() {
+    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
   }
 }
 
@@ -241,9 +266,15 @@ class SelectionItem extends StatefulWidget {
   final String iconName;
   final Function() callback;
   final bool enabled;
+  final Color textColor;
+  final Color bgColor;
+  final Color strokeColor;
 
   const SelectionItem({
     this.enabled = true,
+    this.textColor = Colors.white,
+    this.bgColor = CustomColors.neutralColor90,
+    this.strokeColor = CustomColors.neutralColor90,
     Key? key,
     required this.label,
     required this.time,
@@ -268,8 +299,12 @@ class SelectionItemState extends State<SelectionItem> {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           height: 56,
           decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 34, 38, 42),
-              borderRadius: BorderRadius.circular(8)),
+              color: widget.bgColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 1,
+                color: widget.strokeColor,
+              )),
           child: Row(
             children: [
               const SizedBox(width: 16),
@@ -284,13 +319,13 @@ class SelectionItemState extends State<SelectionItem> {
               Text(
                 widget.label,
                 style: TextStyle(
-                    color: widget.enabled ? Colors.white : Colors.grey),
+                    color: widget.enabled ? widget.textColor : Colors.grey),
               ),
               const Spacer(),
               Text(
                 widget.time,
                 style: TextStyle(
-                    color: widget.enabled ? Colors.white : Colors.grey),
+                    color: widget.enabled ? widget.textColor : Colors.grey),
               ),
               const SizedBox(width: 16)
             ],

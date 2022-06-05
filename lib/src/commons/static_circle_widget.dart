@@ -60,7 +60,8 @@ class StaticCircleWidget extends StatelessWidget {
               child: SvgPicture.asset('assets/images/icons/play.svg'),
             ),
             onTap: () {
-              Navigator.pushNamed(context, ActiveTrainingScreen.routeName);
+              Navigator.restorablePushNamed(
+                  context, ActiveTrainingScreen.routeName);
             },
           ),
           const SizedBox(

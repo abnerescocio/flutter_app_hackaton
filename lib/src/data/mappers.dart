@@ -44,4 +44,15 @@ class UserMapper {
       cycleQuantity,
     );
   }
+
+  static User fromUser(User? user) {
+    return User(
+      user?.isFirstAccess ?? false,
+      user?.seriesTimeInSeconds ?? 0,
+      user?.sleepTimeInSeconds ?? 0,
+      user?.cycleIntervalInSeconds ?? 0,
+      user?.seriesQuantity ?? 0,
+      user?.cycleQuantity ?? 0,
+    );
+  }
 }
