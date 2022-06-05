@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
-import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
-import 'package:flutter_app_hackaton/src/settings/settings_view.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+
+import '../first_training/first_traning.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routerName = "/";
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           if (state is SuccessGetUserState) {
             if (state.user.isFirstAccess) {
-              nextRoute = ConfigurationScreen.routeName;
+              nextRoute = FirstTraingScreen.routeName;
             } else {
               nextRoute = PreTraningScreen.routeName;
             }
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Future.delayed(
               const Duration(seconds: 3),
               () {
-                Navigator.pushReplacementNamed(context, nextRoute);
+                Navigator.pushNamed(context, nextRoute);
               },
             );
           }

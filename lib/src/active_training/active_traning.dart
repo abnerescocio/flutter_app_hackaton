@@ -3,7 +3,7 @@ import 'package:flutter_app_hackaton/src/commons/animated_circle_widget.dart';
 import 'package:flutter_app_hackaton/src/commons/one_widget.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../commons/MusicButtons.dart';
+import '../commons/music_buttons.dart';
 import '../themes/custom_colors.dart';
 
 class ActiveTrainingScreen extends StatelessWidget {

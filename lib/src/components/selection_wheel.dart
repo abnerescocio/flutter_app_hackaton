@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_hackaton/src/base_button.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
-import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class SingleWheelSelector extends StatelessWidget {
@@ -52,23 +49,16 @@ class WheelPicker extends StatefulWidget {
   final int initialValue;
 
   @override
-  _WheelPickerState createState() => _WheelPickerState();
+  WheelPickerState createState() => WheelPickerState();
 }
 
-class _WheelPickerState extends State<WheelPicker> {
+class WheelPickerState extends State<WheelPicker> {
   int _value = 0;
 
   @override
   void initState() {
     super.initState();
     _value = widget.initialValue;
-  }
-
-  @override
-  void didUpdateWidget(covariant WheelPicker oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    // widget.callback(_value);
   }
 
   @override
@@ -81,7 +71,7 @@ class _WheelPickerState extends State<WheelPicker> {
           child: Column(
             children: [
               Container(height: 2, color: CustomColors.primaryPurpleDark),
-              SizedBox(height: 48),
+              const SizedBox(height: 48),
               Container(height: 2, color: CustomColors.primaryPurpleDark)
             ],
           ),

@@ -12,7 +12,6 @@ environment:
 dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
-  provider: ^6.0.0
   cloud_firestore: ^1.0.0
   firebase_core: ^1.17.1
   flutter:
@@ -20,6 +19,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^1.1.0
+  flutter_svg_provider: ^1.0.3
   numberpicker: ^2.1.1
   flutter_picker: ^2.0.3
 

@@ -10,6 +10,7 @@ class OneWidget extends StatelessWidget {
     required this.label,
     required this.topMargin,
   }) : super(key: key);
+
   final String icon;
   final String label;
   final double topMargin;
@@ -17,7 +18,7 @@ class OneWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(top: topMargin, left: 160),
+      padding: EdgeInsets.only(top: topMargin, left: 160),
       child: Column(
         children: [
           Row(
@@ -35,7 +36,9 @@ class OneWidget extends StatelessWidget {
               Text(
                 label,
                 style: const TextStyle(
-                    fontSize: 18, color: CustomColors.neutralColor20),
+                  fontSize: 18,
+                  color: CustomColors.neutralColor20,
+                ),
               ),
             ],
           ),
