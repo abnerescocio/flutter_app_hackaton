@@ -75,6 +75,8 @@ class MyApp extends StatelessWidget {
                     return const PreTraningScreen();
                   case ConfigurationScreen.routeName:
                     return const ConfigurationScreen();
+                  case ActiveTrainingScreen.routeName:
+                    return const ActiveTrainingScreen();
                   default:
                     return const SplashScreen();
                 }
