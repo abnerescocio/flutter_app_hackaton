@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'active_training/active_traning.dart';
+import 'congrats/congrats.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -46,6 +47,8 @@ class MyApp extends StatelessWidget {
                 return const ConfigurationScreen();
               case ActiveTrainingScreen.routeName:
                 return const ActiveTrainingScreen();
+              case CongratsScreen.routerName:
+                return const CongratsScreen();
               default:
                 return const SplashScreen();
             }
