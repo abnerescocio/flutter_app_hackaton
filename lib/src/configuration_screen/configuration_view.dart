@@ -4,11 +4,14 @@ import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
 import 'package:flutter_app_hackaton/src/components/selection_wheel.dart';
+import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../components/wheel_amount_selector.dart';
+import '../components/wheel_time_selector.dart';
 import '../models/user.dart';
 
 class ConfigurationScreen extends StatefulWidget {
@@ -23,12 +26,6 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   late final GetUserBloc getUserBloc;
   late final SetUserBloc setUserBloc;
   User? user;
-
-  num? _seriesTimeInSeconds;
-  num? _seriesQuantity;
-  num? _sleepTimeInSeconds;
-  num? _cycleQuantity;
-  num? _cycleIntervalInSeconds;
 
   @override
   void initState() {
@@ -76,9 +73,19 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
             user = null;
           }
 
+          num seriesTimeInSeconds = user?.seriesTimeInSeconds ?? 0;
+          num cycleQuantity = user?.cycleQuantity ?? 0;
+          num sleepTimeInSeconds = user?.sleepTimeInSeconds ?? 0;
+          num seriesQuantity = user?.seriesQuantity ?? 0;
+          num cycleIntervalInSeconds = user?.cycleIntervalInSeconds ?? 0;
+
           return Scaffold(
               appBar: AppBar(
                 title: const Text("Configurações"),
+                leading: GestureDetector(
+                  child: const Icon(Icons.close),
+                  onTap: finished,
+                ),
                 backgroundColor: CustomColors.mainBackground,
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(2),
@@ -97,34 +104,37 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   const SizedBox(height: 16),
                   SelectionItem(
                     label: "Tempo da série",
-                    time: ConverterUtils.toMinutesAndSeconds(
-                      _seriesTimeInSeconds ?? user?.seriesTimeInSeconds,
-                    ),
+                    time:
+                        ConverterUtils.toMinutesAndSeconds(seriesTimeInSeconds),
                     icon_name: "weight_with_clock",
                     callback: () {
                       _showDialog(
-                        WheelTimeSelector(callback: (seconds) {
-                          Navigator.pop(context);
-                          setState(() {
-                            _seriesTimeInSeconds = seconds;
-                          });
-                        }),
+                        WheelTimeSelector(
+                          callback: (seconds) {
+                            Navigator.pop(context);
+                            setState(() {
+                              user?.seriesTimeInSeconds = seconds;
+                            });
+                          },
+                          value: seriesTimeInSeconds.toInt(),
+                        ),
                       );
                     },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de séries",
-                    time: "${_seriesQuantity ?? user?.seriesQuantity ?? 0}",
+                    time: "$seriesQuantity",
                     icon_name: "weight",
                     callback: () {
                       _showDialog(
                         WheelAmountSelector(
-                            value: 0,
+                            value: seriesQuantity.toInt(),
                             callback: (value) {
                               Navigator.pop(context);
                               setState(() {
-                                _seriesQuantity = value;
+                                // _seriesQuantity = value;
+                                user?.seriesQuantity = value;
                               });
                             }),
                       );
@@ -134,30 +144,33 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   SelectionItem(
                     label: "Tempo de descanso",
                     time: ConverterUtils.toMinutesAndSeconds(
-                      _sleepTimeInSeconds ?? user?.sleepTimeInSeconds ?? 0,
+                      sleepTimeInSeconds,
                     ),
                     icon_name: "couch-timer",
                     callback: () {
-                      _showDialog(WheelTimeSelector(callback: (seconds) {
-                        Navigator.pop(context);
-                        setState(() {
-                          _sleepTimeInSeconds = seconds;
-                        });
-                      }));
+                      _showDialog(WheelTimeSelector(
+                        callback: (seconds) {
+                          Navigator.pop(context);
+                          setState(() {
+                            user?.sleepTimeInSeconds = seconds;
+                          });
+                        },
+                        value: sleepTimeInSeconds.toInt(),
+                      ));
                     },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de ciclos",
-                    time: "${_cycleQuantity ?? user?.cycleQuantity ?? 0}",
+                    time: "${cycleQuantity}",
                     icon_name: "refresh",
                     callback: () {
                       _showDialog(WheelAmountSelector(
-                          value: 0,
+                          value: cycleQuantity.toInt(),
                           callback: (value) {
                             Navigator.pop(context);
                             setState(() {
-                              _cycleQuantity = value;
+                              user?.cycleQuantity = value;
                             });
                           }));
                     },
@@ -166,16 +179,18 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   SelectionItem(
                     label: "Intervalo entre ciclos",
                     time: ConverterUtils.toMinutesAndSeconds(
-                        _cycleIntervalInSeconds ??
-                            user?.cycleIntervalInSeconds),
+                        cycleIntervalInSeconds),
                     icon_name: "rest-disable",
                     callback: () {
-                      _showDialog(WheelTimeSelector(callback: (seconds) {
-                        Navigator.pop(context);
-                        setState(() {
-                          _cycleIntervalInSeconds = seconds;
-                        });
-                      }));
+                      _showDialog(WheelTimeSelector(
+                        callback: (seconds) {
+                          Navigator.pop(context);
+                          setState(() {
+                            user?.cycleIntervalInSeconds = seconds;
+                          });
+                        },
+                        value: cycleIntervalInSeconds.toInt(),
+                      ));
                     },
                   ),
                   const SizedBox(height: 8),
@@ -198,13 +213,20 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   void save() {
     final newUser = User(
       true,
-      _seriesTimeInSeconds ?? 0,
-      _sleepTimeInSeconds ?? 0,
-      _cycleIntervalInSeconds ?? 0,
-      _seriesQuantity ?? 0,
-      _cycleQuantity ?? 0,
+      user?.seriesTimeInSeconds ?? 0,
+      user?.sleepTimeInSeconds ?? 0,
+      user?.cycleIntervalInSeconds ?? 0,
+      user?.seriesQuantity ?? 0,
+      user?.cycleQuantity ?? 0,
     );
     setUserBloc.add(SetUserEvent('time_10', newUser));
+    Future.delayed(Duration(seconds: 3), () {
+      finished();
+    });
+  }
+
+  void finished() {
+    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
   }
 }
 

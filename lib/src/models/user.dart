@@ -3,12 +3,12 @@ class User {
 
   final bool isFirstAccess;
 
-  final num seriesTimeInSeconds;
-  final num sleepTimeInSeconds;
-  final num cycleIntervalInSeconds;
+  num seriesTimeInSeconds;
+  num sleepTimeInSeconds;
+  num cycleIntervalInSeconds;
 
-  final num seriesQuantity;
-  final num cycleQuantity;
+  num seriesQuantity;
+  num cycleQuantity;
 
   User(
     this.isFirstAccess,

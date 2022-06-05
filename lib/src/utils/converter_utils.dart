@@ -7,6 +7,14 @@ class ConverterUtils {
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
 
+  static List toMinutesAndSecondsNums(num? seconds) {
+    final duration = Duration(seconds: seconds?.toInt() ?? 0);
+    return [
+      duration.inMinutes.remainder(60).toInt(),
+      duration.inSeconds.remainder(60).toInt()
+    ];
+  }
+
   static int toSeconds(int minutes, int seconds) {
     return Duration(minutes: minutes, seconds: seconds).inSeconds;
   }
