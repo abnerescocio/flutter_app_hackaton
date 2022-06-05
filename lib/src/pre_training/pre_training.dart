@@ -31,7 +31,7 @@ class PreTraningScreen extends StatelessWidget {
           const SizedBox(
             height: 75,
           ),
-          BaseButton(text: "Editar Tabata")
+          BaseButton(text: "Editar Tabata"),
         ],
       ),
     );
@@ -48,10 +48,22 @@ class CircleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      SizedBox(
-        height: 50,
-        width: 50,
-        child: SvgPicture.asset('assets/images/icons/play.svg'),
+      Column(
+        children: [
+          SizedBox(
+            height: 50,
+            width: 50,
+            child:SvgPicture.asset('assets/images/icons/play.svg'),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          const Text(
+            "Toque para iniciar",
+            style: TextStyle(
+                fontSize: 18, color: CustomColors.neutralColor20),
+          ),
+        ],
       ),
       SizedBox(
         height: 280,
@@ -73,7 +85,7 @@ class CircleWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(140),
           ),
         ),
-      )
+      ),
     ]);
   }
 }
