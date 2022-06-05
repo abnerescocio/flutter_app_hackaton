@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_hackaton/src/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
+import 'package:flutter_app_hackaton/src/components/selection_wheel.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +24,11 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   late final SetUserBloc setUserBloc;
   User? user;
 
-  num _seriesTimeInSeconds = 0;
-  num _seriesQuantity = 0;
-  num _sleepTimeInSeconds = 0;
-  num _cycleQuantity = 0;
-  num _cycleIntervalInSeconds = 0;
+  num? _seriesTimeInSeconds;
+  num? _seriesQuantity;
+  num? _sleepTimeInSeconds;
+  num? _cycleQuantity;
+  num? _cycleIntervalInSeconds;
 
   @override
   void initState() {
@@ -41,6 +43,26 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   void dispose() {
     super.dispose();
     getUserBloc.close();
+  }
+
+  void _showDialog(Widget child) {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) => Container(
+              height: 312,
+              padding: const EdgeInsets.only(top: 6.0),
+              // The Bottom margin is provided to align the popup above the system navigation bar.
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              // Provide a background color for the popup.
+              color: CustomColors.mainBackground,
+              // Use a SafeArea widget to avoid system overlaps.
+              child: SafeArea(
+                top: false,
+                child: child,
+              ),
+            ));
   }
 
   @override
@@ -76,46 +98,85 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                   SelectionItem(
                     label: "Tempo da série",
                     time: ConverterUtils.toMinutesAndSeconds(
-                      user?.seriesTimeInSeconds,
+                      _seriesTimeInSeconds ?? user?.seriesTimeInSeconds,
                     ),
                     icon_name: "weight_with_clock",
-                    callback: (value) {
-                      setState(() {
-                        _seriesTimeInSeconds = value;
-                      });
+                    callback: () {
+                      _showDialog(
+                        WheelTimeSelector(callback: (seconds) {
+                          Navigator.pop(context);
+                          setState(() {
+                            _seriesTimeInSeconds = seconds;
+                          });
+                        }),
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de séries",
-                    time: "${user?.seriesQuantity ?? 0}",
+                    time: "${_seriesQuantity ?? user?.seriesQuantity ?? 0}",
                     icon_name: "weight",
-                    callback: (value) {},
+                    callback: () {
+                      _showDialog(
+                        WheelAmountSelector(
+                            value: 0,
+                            callback: (value) {
+                              Navigator.pop(context);
+                              setState(() {
+                                _seriesQuantity = value;
+                              });
+                            }),
+                      );
+                    },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Tempo de descanso",
                     time: ConverterUtils.toMinutesAndSeconds(
-                      user?.sleepTimeInSeconds,
+                      _sleepTimeInSeconds ?? user?.sleepTimeInSeconds ?? 0,
                     ),
                     icon_name: "couch-timer",
-                    callback: (value) {},
+                    callback: () {
+                      _showDialog(WheelTimeSelector(callback: (seconds) {
+                        Navigator.pop(context);
+                        setState(() {
+                          _sleepTimeInSeconds = seconds;
+                        });
+                      }));
+                    },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Quantidade de ciclos",
-                    time: "${user?.cycleQuantity ?? 0}",
+                    time: "${_cycleQuantity ?? user?.cycleQuantity ?? 0}",
                     icon_name: "refresh",
-                    callback: (value) {},
+                    callback: () {
+                      _showDialog(WheelAmountSelector(
+                          value: 0,
+                          callback: (value) {
+                            Navigator.pop(context);
+                            setState(() {
+                              _cycleQuantity = value;
+                            });
+                          }));
+                    },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
                     label: "Intervalo entre ciclos",
                     time: ConverterUtils.toMinutesAndSeconds(
-                      user?.cycleIntervalInSeconds,
-                    ),
+                        _cycleIntervalInSeconds ??
+                            user?.cycleIntervalInSeconds),
                     icon_name: "rest-disable",
-                    callback: (value) {},
+                    callback: () {
+                      _showDialog(WheelTimeSelector(callback: (seconds) {
+                        Navigator.pop(context);
+                        setState(() {
+                          _cycleIntervalInSeconds = seconds;
+                        });
+                      }));
+                    },
                   ),
                   const SizedBox(height: 8),
                   SelectionItem(
@@ -124,21 +185,34 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                       user?.totalTimeInSconds(),
                     ),
                     icon_name: "complete-timer",
-                    callback: (value) {},
+                    callback: () {},
                   ),
+                  const Spacer(),
+                  BaseButton(text: "Salvar", onPressed: save),
+                  const SizedBox(height: 24)
                 ],
               ));
         });
   }
 
-  void save() {}
+  void save() {
+    final newUser = User(
+      true,
+      _seriesTimeInSeconds ?? 0,
+      _sleepTimeInSeconds ?? 0,
+      _cycleIntervalInSeconds ?? 0,
+      _seriesQuantity ?? 0,
+      _cycleQuantity ?? 0,
+    );
+    setUserBloc.add(SetUserEvent('time_10', newUser));
+  }
 }
 
 class SelectionItem extends StatefulWidget {
   final String label;
   final String time;
   final String icon_name;
-  final Function(int value) callback;
+  final Function() callback;
 
   const SelectionItem({
     Key? key,
@@ -155,31 +229,35 @@ class SelectionItem extends StatefulWidget {
 class _SelectionItemState extends State<SelectionItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      height: 56,
-      decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 34, 38, 42),
-          borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        children: [
-          const SizedBox(width: 16),
-          SizedBox(
-              height: 24,
-              width: 24,
-              child: SvgPicture.asset(
-                  "assets/images/icons/${widget.icon_name}.svg")),
-          const SizedBox(width: 8),
-          Text(
-            widget.label,
-            style: const TextStyle(color: Colors.white),
+    return GestureDetector(
+        onTap: () {
+          widget.callback();
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          height: 56,
+          decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 34, 38, 42),
+              borderRadius: BorderRadius.circular(8)),
+          child: Row(
+            children: [
+              const SizedBox(width: 16),
+              SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: SvgPicture.asset(
+                      "assets/images/icons/${widget.icon_name}.svg")),
+              const SizedBox(width: 8),
+              Text(
+                widget.label,
+                style: const TextStyle(color: Colors.white),
+              ),
+              const Spacer(),
+              Text(widget.time, style: const TextStyle(color: Colors.white)),
+              const SizedBox(width: 16)
+            ],
           ),
-          const Spacer(),
-          Text(widget.time, style: const TextStyle(color: Colors.white)),
-          const SizedBox(width: 16)
-        ],
-      ),
-    );
+        ));
   }
 }
 

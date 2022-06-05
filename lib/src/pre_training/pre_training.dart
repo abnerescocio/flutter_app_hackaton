@@ -32,10 +32,12 @@ class PreTraningScreen extends StatelessWidget {
           const SizedBox(
             height: 75,
           ),
-          BaseButton(text: "Editar Tabata"),
+          BaseButton(
+            text: "Editar Tabata",
+            onPressed: () {},
+          ),
         ],
       ),
     );
   }
 }
-
