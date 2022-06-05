@@ -65,7 +65,7 @@ class BaseTextButton extends StatelessWidget {
             width: 296,
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: CustomColors.primaryPurpleDark,
+                primary: CustomColors.primaryPurple,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(50),
