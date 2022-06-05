@@ -6,6 +6,7 @@ import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/regressive_screen/regressive_screen.dart';
 import 'package:flutter_app_hackaton/src/splash/splash.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
+import 'package:flutter_app_hackaton/src/treining/list_training.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
                 return const CongratsScreen();
               case RegressiveScreen.routeName:
                 return const RegressiveScreen();
+              case ListTrainingScreen.routeName:
+                return const ListTrainingScreen();
               default:
                 return const SplashScreen();
             }

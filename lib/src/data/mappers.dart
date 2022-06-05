@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
+import 'package:flutter_app_hackaton/src/models/intensity.dart';
+import 'package:flutter_app_hackaton/src/models/training.dart';
 import 'package:flutter_app_hackaton/src/models/user.dart';
 
 class UserMapper {
@@ -80,5 +82,29 @@ class TrainingMapper {
       fieldSeriesQuantity: event.training.seriesQuantity,
       fieldCycleQuantity: event.training.cycleQuantity,
     };
+  }
+
+  static Training fromSnapshot(DocumentSnapshot snapshot) {
+    final dynamic data = snapshot.data();
+
+    final String comment = data[fieldComment] ?? "";
+
+    final num seriesTimeInSeconds = data[fieldSeriesTimeInSeconds] ?? 20;
+    final num sleepTimeInSeconds = data[fieldSleepTimeInSeconds] ?? 10;
+    final num cycleIntervalInSeconds = data[fieldCycleIntervalInSeconds] ?? 0;
+
+    final num seriesQuantity = data[fieldSeriesQuantity] ?? 8;
+    final num cycleQuantity = data[fieldCycleQuantity] ?? 1;
+
+    return Training(
+      comment,
+      Intensity.high,
+      DateTime.now(),
+      seriesTimeInSeconds,
+      sleepTimeInSeconds,
+      cycleIntervalInSeconds,
+      seriesQuantity,
+      cycleQuantity,
+    );
   }
 }

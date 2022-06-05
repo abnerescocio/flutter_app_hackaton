@@ -1,3 +1,5 @@
+import 'package:flutter_app_hackaton/src/models/training.dart';
+
 import '../models/user.dart';
 
 // GET USER STATE
@@ -41,4 +43,25 @@ class ErrorSetUserTrainingState extends SetUserTrainingState {
   final Object exception;
 
   ErrorSetUserTrainingState(this.exception);
+}
+
+// GET USER TRAINING LIST
+abstract class GetUserTrainingListState {
+  final List<Training> trainingList;
+
+  GetUserTrainingListState(this.trainingList);
+}
+
+class InitialGetUserTrainingListState extends GetUserTrainingListState {
+  InitialGetUserTrainingListState() : super(List.empty());
+}
+
+class SuccessGetUserTrainingListState extends GetUserTrainingListState {
+  SuccessGetUserTrainingListState(super.trainingList);
+}
+
+class ErrorGetUserTrainingListState extends GetUserTrainingListState {
+  final Object exception;
+
+  ErrorGetUserTrainingListState(this.exception) : super(List.empty());
 }

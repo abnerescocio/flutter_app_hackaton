@@ -23,3 +23,7 @@ class SetUserTrainingEvent extends UserEvent {
 
   SetUserTrainingEvent(super.userId, this.training);
 }
+
+class GetUserTrainingListEvent extends UserEvent {
+  GetUserTrainingListEvent(super.userId);
+}

@@ -3,6 +3,7 @@ import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
 import 'package:flutter_app_hackaton/src/data/mappers.dart';
 import 'package:flutter_app_hackaton/src/data/repositories.dart';
+import 'package:flutter_app_hackaton/src/models/training.dart';
 
 class GetUserBloc extends Bloc<GetUserEvent, GetUserState> {
   final UserRepository _repository = UserRepository();
@@ -53,6 +54,28 @@ class SetUserTrainingBloc
         });
       } catch (e) {
         emit(ErrorSetUserTrainingState(e));
+      }
+    });
+  }
+}
+
+class GetUserTrainingListBloc
+    extends Bloc<GetUserTrainingListEvent, GetUserTrainingListState> {
+  final UserRepository _repository = UserRepository();
+
+  GetUserTrainingListBloc() : super(InitialGetUserTrainingListState()) {
+    on<GetUserTrainingListEvent>((event, emit) async {
+      try {
+        await _repository.getUserTrainingListById(event.userId).then((value) {
+          List<Training> trainingList = [];
+          for (var doc in value.docs) {
+            final training = TrainingMapper.fromSnapshot(doc);
+            trainingList.add(training);
+          }
+          emit(SuccessGetUserTrainingListState(trainingList));
+        });
+      } catch (e) {
+        emit(ErrorGetUserTrainingListState(e));
       }
     });
   }

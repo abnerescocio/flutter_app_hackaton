@@ -29,4 +29,12 @@ class UserRepository {
         .collection(Training.collection)
         .add(training);
   }
+
+  Future<QuerySnapshot> getUserTrainingListById(String userId) async {
+    return _database
+        .collection(User.collection)
+        .doc(userId)
+        .collection(Training.collection)
+        .get();
+  }
 }
