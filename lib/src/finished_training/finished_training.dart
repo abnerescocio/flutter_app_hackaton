@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/app_states.dart';
 import '../commons/vertical_list_widget.dart';
 import '../components/base_button.dart';
+import '../components/bigger_base_button.dart';
 import '../configuration_screen/configuration_view.dart';
 import '../models/user.dart';
 import '../pre_training/pre_training.dart';
@@ -189,45 +190,48 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                   const SizedBox(
                     height: 17,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    child: TextField(
-                      onChanged: (text) {
-                        setState(() {
-                          _comment = text;
-                        });
-                      },
-                      style: const TextStyle(
-                        fontFamily: 'Lato',
-                        fontSize: 14,
-                        color: CustomColors.neutralColor20,
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding:
-                        const EdgeInsets.symmetric(vertical: 40.0),
-                        fillColor: CustomColors.neutralColor20,
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Lato',
-                          fontSize: 14,
-                          color: CustomColors.neutralColor50,
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          onChanged: (text) {
+                            setState(() {
+                              _comment = text;
+                            });
+                          },
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                          maxLines: 6,
+                          style: const TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 14,
+                            color: CustomColors.neutralColor20,
+                          ),
+                          decoration: InputDecoration(
+                            contentPadding:
+                            const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                            fillColor: CustomColors.neutralColor20,
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 14,
+                              color: CustomColors.neutralColor50,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide:
+                              BorderSide(color: CustomColors.neutralColor50),
+                            ),
+                            hintText: 'Conte mais sobre seu treino (opcional)',
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                          BorderSide(color: CustomColors.neutralColor50),
-                        ),
-                        hintText: 'Conte mais sobre seu treino (opcional)',
-                      ),
+                      ],
                     ),
                   ),
                   const SizedBox(
                     height: 48,
                   ),
-                  BaseButton(
+                  BiggerBaseButton(
                     text: "Salvar",
                     onPressed: () {
                       goToConfiguration(context);
