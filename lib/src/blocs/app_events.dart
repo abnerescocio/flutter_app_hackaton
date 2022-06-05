@@ -1,16 +1,17 @@
 import '../models/user.dart';
 
-abstract class UserEvent {}
-
-class GetUserEvent extends UserEvent {
+abstract class UserEvent {
   final String userId;
 
-  GetUserEvent(this.userId);
+  UserEvent(this.userId);
 }
 
-class AddUserEvent extends UserEvent {
-  final User user;
-  final String userId;
+class GetUserEvent extends UserEvent {
+  GetUserEvent(super.userId);
+}
 
-  AddUserEvent(this.user, this.userId);
+class SetUserEvent extends UserEvent {
+  final User user;
+
+  SetUserEvent(super.userId, this.user);
 }

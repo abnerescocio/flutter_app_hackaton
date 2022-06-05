@@ -22,3 +22,20 @@ class GetUserBloc extends Bloc<GetUserEvent, GetUserState> {
     });
   }
 }
+
+class SetUserBloc extends Bloc<SetUserEvent, SetUserState> {
+  final UserRepository _repository = UserRepository();
+
+  SetUserBloc() : super(InitialSetUserState()) {
+    on<SetUserEvent>((event, emit) async {
+      try {
+        final data = UserMapper.toMap(event);
+        _repository.save(data, event.userId).then((value) {
+          emit(SuccessSetUserState());
+        });
+      } catch (e) {
+        emit(ErrorSetUserState(e));
+      }
+    });
+  }
+}

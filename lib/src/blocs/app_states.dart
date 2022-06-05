@@ -1,6 +1,6 @@
 import '../models/user.dart';
 
-/// GET USER STATE
+// GET USER STATE
 abstract class GetUserState {}
 
 class InitialGetUserState extends GetUserState {}
@@ -17,13 +17,15 @@ class ErrorGetUserState extends GetUserState {
   ErrorGetUserState(this.exception);
 }
 
-/// ADD USER STATE
-abstract class AddUserState {}
+// SET USER STATE
+abstract class SetUserState {}
 
-class SuccessAddUserState extends AddUserState {}
+class InitialSetUserState extends SetUserState {}
 
-class ErrorAddUserState extends AddUserState {
-  final Exception exception;
+class SuccessSetUserState extends SetUserState {}
 
-  ErrorAddUserState(this.exception);
+class ErrorSetUserState extends SetUserState {
+  final Object exception;
+
+  ErrorSetUserState(this.exception);
 }
