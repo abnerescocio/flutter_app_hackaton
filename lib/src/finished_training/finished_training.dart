@@ -8,15 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/app_states.dart';
 import '../commons/vertical_list_widget.dart';
-import '../components/base_button.dart';
 import '../components/bigger_base_button.dart';
-import '../configuration_screen/configuration_view.dart';
 import '../models/user.dart';
 import '../pre_training/pre_training.dart';
 import '../themes/custom_colors.dart';
 
 class FinishedTrainingScreen extends StatefulWidget {
-  static const String routreName = "/finishTraining";
+  static const String routeName = "/finishTraining";
 
   const FinishedTrainingScreen({Key? key}) : super(key: key);
 
@@ -61,9 +59,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                   elevation: 0,
                   backgroundColor: CustomColors.primaryPurpleDark,
                   leading: GestureDetector(
-                    onTap: () {
-                      finished(context);
-                    },
+                    onTap: finished,
                     child: const Icon(Icons.close),
                   ),
                   flexibleSpace: Column(
@@ -193,7 +189,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                       height: 17,
                     ),
                     Container(
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       child: Column(
                         children: <Widget>[
                           TextField(
@@ -221,8 +217,9 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                    color: CustomColors.neutralColor50),
+                                borderSide: const BorderSide(
+                                  color: CustomColors.neutralColor50,
+                                ),
                               ),
                               hintText:
                                   'Conte mais sobre seu treino (opcional)',
@@ -237,7 +234,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
                     BiggerBaseButton(
                       text: "Salvar",
                       onPressed: () {
-                        goToConfiguration(context);
+                        save(context);
                       },
                     )
                   ],
@@ -246,7 +243,7 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
         });
   }
 
-  void goToConfiguration(BuildContext context) {
+  void save(BuildContext context) {
     final newTraining = Training(
       _comment ?? "",
       _currentIntensity ?? Intensity.low,
@@ -260,12 +257,10 @@ class _FinishedTrainingScreenState extends State<FinishedTrainingScreen> {
 
     setUserTrainingBloc.add(SetUserTrainingEvent("time_10", newTraining));
 
-    Future.delayed(const Duration(microseconds: 1500), () {
-      Navigator.pushNamed(context, ConfigurationScreen.routeName);
-    });
+    Future.delayed(const Duration(microseconds: 1500), finished);
   }
 
-  void finished(BuildContext context) {
+  void finished() {
     Navigator.pushNamed(context, PreTraningScreen.routeName);
   }
 }

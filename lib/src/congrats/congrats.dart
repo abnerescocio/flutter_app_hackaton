@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
+import 'package:flutter_app_hackaton/src/finished_training/finished_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:lottie/lottie.dart';
 
@@ -24,7 +24,7 @@ class _CongratsScreenState extends State<CongratsScreen> {
             () {
               Navigator.pushReplacementNamed(
                 context,
-                PreTraningScreen.routeName,
+                FinishedTrainingScreen.routeName,
               );
             },
           );
