@@ -7,7 +7,7 @@ import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import 'first_training/first_traning.dart';
+import '../first_training/first_traning.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routerName = "/";

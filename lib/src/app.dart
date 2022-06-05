@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/first_training/first_traning.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
-import 'package:flutter_app_hackaton/src/splash.dart';
+import 'package:flutter_app_hackaton/src/splash/splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
