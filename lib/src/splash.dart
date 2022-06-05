@@ -4,7 +4,6 @@ import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
 import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
-import 'package:flutter_app_hackaton/src/settings/settings_view.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
