@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/active_training/active_traning.dart';
+import 'package:flutter_app_hackaton/src/regressive_screen/regressive_screen.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../themes/custom_colors.dart';
@@ -61,7 +62,9 @@ class StaticCircleWidget extends StatelessWidget {
             ),
             onTap: () {
               Navigator.restorablePushNamed(
-                  context, ActiveTrainingScreen.routeName);
+                context,
+                RegressiveScreen.routeName,
+              );
             },
           ),
           const SizedBox(

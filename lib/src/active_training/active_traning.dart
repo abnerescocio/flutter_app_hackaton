@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/commons/animated_circle_widget.dart';
 import 'package:flutter_app_hackaton/src/commons/one_widget.dart';
 import 'package:flutter_app_hackaton/src/components/leave_feature.dart';
+import 'package:flutter_app_hackaton/src/congrats/congrats.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -82,18 +83,18 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
       case TrainnigStatus.rest:
         return [
           "Descanse",
-          "couch-timer",
+          "couch-timer-green",
           CustomColors.green,
           _restingTimeCount,
           _restingTime
         ];
 
       case TrainnigStatus.preparing:
-        return ["Prepare-se", "couch-timer", CustomColors.green, ""];
+        return ["Prepare-se", "couch-timer-green", CustomColors.green, ""];
       case TrainnigStatus.interval:
         return [
           "Intervalo",
-          "couch-timer",
+          "couch-timer-green",
           CustomColors.green,
           _cyclesIntervalTimeCount,
           _totalCyclesInterval
@@ -175,6 +176,8 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
         _trainningTimeCount = _trainningTime;
         _timer?.cancel();
       });
+
+      Navigator.pushReplacementNamed(context, CongratsScreen.routeName);
     }
   }
 

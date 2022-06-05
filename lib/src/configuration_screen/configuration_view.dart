@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_hackaton/src/components/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../components/bigger_base_button.dart';
 import '../components/leave_feature.dart';
 import '../components/wheel_amount_selector.dart';
 import '../components/wheel_time_selector.dart';
@@ -17,6 +17,7 @@ import '../models/user.dart';
 
 class ConfigurationScreen extends StatefulWidget {
   static const String routeName = "/config";
+
   const ConfigurationScreen({Key? key}) : super(key: key);
 
   @override
@@ -224,7 +225,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     strokeColor: CustomColors.neutralColor80,
                   ),
                   const Spacer(),
-                  BaseButton(text: "Salvar", onPressed: save),
+                  BiggerBaseButton(text: "Salvar", onPressed: save),
                   const SizedBox(height: 24)
                 ],
               ));
@@ -234,7 +235,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   void save() {
     final newUser = UserMapper.fromUser(user);
     setUserBloc.add(SetUserEvent('time_10', newUser));
-    Future.delayed(const Duration(seconds: 1), finished);
+    Future.delayed(const Duration(seconds: 1), goToPreTreining);
   }
 
   void finished() {

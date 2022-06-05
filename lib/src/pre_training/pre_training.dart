@@ -8,8 +8,8 @@ import 'package:flutter_app_hackaton/src/models/user.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../components/base_button.dart';
 import '../blocs/app_states.dart';
+import '../components/bigger_base_button.dart';
 import '../themes/custom_colors.dart';
 
 class PreTraningScreen extends StatefulWidget {
@@ -91,7 +91,7 @@ class _PreTraningScreenState extends State<PreTraningScreen> {
               const SizedBox(
                 height: 75,
               ),
-              BaseButton(
+              BiggerBaseButton(
                 text: "Editar Tabata",
                 onPressed: goToConfiguration,
               ),
