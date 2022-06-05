@@ -9,6 +9,7 @@ import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../components/leave_feature.dart';
 import '../components/wheel_amount_selector.dart';
 import '../components/wheel_time_selector.dart';
 import '../models/user.dart';
@@ -41,19 +42,16 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
     getUserBloc.close();
   }
 
-  void _showDialog(Widget child) {
+  void _showDialog(Widget child, {double height = 322}) {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) => Container(
-        height: 312,
+        height: height,
         padding: const EdgeInsets.only(top: 6.0),
-        // The Bottom margin is provided to align the popup above the system navigation bar.
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        // Provide a background color for the popup.
         color: CustomColors.mainBackground,
-        // Use a SafeArea widget to avoid system overlaps.
         child: SafeArea(
           top: false,
           child: child,
@@ -241,7 +239,17 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   }
 
   void finished() {
-    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
+    _showDialog(
+      LeaveFeatureAlert(
+        yes: () {
+          Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
+        },
+        no: () {
+          Navigator.pop(context);
+        },
+      ),
+      height: 360,
+    );
   }
 }
 
