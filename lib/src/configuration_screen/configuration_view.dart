@@ -241,7 +241,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   }
 
   void finished() {
-    Navigator.pushNamed(context, PreTraningScreen.routeName);
+    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
   }
 }
 
