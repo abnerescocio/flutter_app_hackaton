@@ -27,11 +27,16 @@ Abner Souza
 
 📌 App Animation
 
-📌 Unit tests
+
 
 ## Apresentação do APP:
 
-<img src="https://lottiefiles.com/share/wnweqr4a" width="500">
+📌 Unit tests
+
+
+<img src="assets/images/readme/cobertura-testes.png" width="500">
+
+<img src="assets/images/readme/testes-unitarios.png" width="500">
 
 
 
