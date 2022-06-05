@@ -10,12 +10,17 @@ class AnimatedCircleWidget extends StatelessWidget {
     Key? key,
     required this.circleColor,
     required this.titleInside,
-    required this.subtitleInside, required this.firstIcon,
+    required this.subtitleInside,
+    required this.firstIcon,
+    required this.seriesAmountTotal,
+    required this.seriesCount,
   }) : super(key: key);
   final Color circleColor;
   final String titleInside;
   final String subtitleInside;
   final String firstIcon;
+  final String seriesAmountTotal;
+  final String seriesCount;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class AnimatedCircleWidget extends StatelessWidget {
       Column(
         children: [
           Padding(
-            padding:  EdgeInsets.only(bottom: 42),
+            padding: EdgeInsets.only(bottom: 42),
             child: SizedBox(
               child: SvgPicture.asset('assets/images/icons/$firstIcon.svg'),
             ),
@@ -40,9 +45,9 @@ class AnimatedCircleWidget extends StatelessWidget {
             subtitleInside,
             style: TextStyle(fontSize: 18, color: CustomColors.neutralColor20),
           ),
-          const OneWidget(
+          OneWidget(
             icon: 'weight_white',
-            label: "20/20",
+            label: "$seriesCount/$seriesAmountTotal",
             topMargin: 30,
           )
         ],
@@ -56,14 +61,13 @@ class AnimatedCircleWidget extends StatelessWidget {
             valueColor:
                 AlwaysStoppedAnimation<Color>(CustomColors.neutralColor30)),
       ),
-      const SizedBox(
+      SizedBox(
         height: 268,
         width: 268,
         child: CircularProgressIndicator(
             strokeWidth: 10,
             backgroundColor: CustomColors.neutralColor90,
-            valueColor:
-                AlwaysStoppedAnimation<Color>(CustomColors.primaryPurpleDark)),
+            valueColor: AlwaysStoppedAnimation<Color>(circleColor)),
       ),
     ]);
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_hackaton/src/active_training/active_traning.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../themes/custom_colors.dart';
@@ -49,6 +50,27 @@ class StaticCircleWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(140),
           ),
         ),
+      ),
+      Column(
+        children: [
+          GestureDetector(
+            child: SizedBox(
+              height: 50,
+              width: 50,
+              child: SvgPicture.asset('assets/images/icons/play.svg'),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, ActiveTrainingScreen.routeName);
+            },
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          const Text(
+            "Toque para iniciar",
+            style: TextStyle(fontSize: 18, color: CustomColors.neutralColor20),
+          ),
+        ],
       ),
     ]);
   }
