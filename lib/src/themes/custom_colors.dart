@@ -4,6 +4,7 @@ class CustomColors {
   static const Color mainBackground = Color.fromARGB(255, 23, 25, 28);
   static const Color neutralColor100 = Color.fromARGB(255, 28, 30, 34);
   static const Color neutralColor90 = Color.fromARGB(255, 34, 38, 42);
+  static const Color neutralColor80 = Color.fromARGB(255, 46, 51, 56);
   static const Color neutralColor70 = Color.fromARGB(255, 69, 76, 84);
   static const Color neutralColor50 = Color.fromARGB(255, 115, 126, 140);
   static const Color neutralColor40 = Color.fromARGB(255, 171, 178, 186);

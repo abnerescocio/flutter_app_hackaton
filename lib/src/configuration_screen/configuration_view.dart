@@ -43,22 +43,23 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
 
   void _showDialog(Widget child) {
     showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) => Container(
-              height: 312,
-              padding: const EdgeInsets.only(top: 6.0),
-              // The Bottom margin is provided to align the popup above the system navigation bar.
-              margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              // Provide a background color for the popup.
-              color: CustomColors.mainBackground,
-              // Use a SafeArea widget to avoid system overlaps.
-              child: SafeArea(
-                top: false,
-                child: child,
-              ),
-            ));
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 312,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CustomColors.mainBackground,
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
   }
 
   @override
@@ -186,6 +187,12 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     iconName: (user?.cycleQuantity ?? 0) > 1
                         ? "rest"
                         : "rest-disable",
+                    bgColor: (user?.cycleQuantity ?? 0) > 1
+                        ? CustomColors.neutralColor90
+                        : CustomColors.neutralColor100,
+                    strokeColor: (user?.cycleQuantity ?? 0) > 1
+                        ? CustomColors.neutralColor90
+                        : CustomColors.neutralColor100,
                     callback: () {
                       _showDialog(
                         WheelTimeSelector(
@@ -208,6 +215,9 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                     ),
                     iconName: "complete-timer",
                     callback: () {},
+                    textColor: CustomColors.primaryPurple,
+                    bgColor: CustomColors.mainBackground,
+                    strokeColor: CustomColors.neutralColor80,
                   ),
                   const Spacer(),
                   BaseButton(text: "Salvar", onPressed: save),
@@ -241,9 +251,15 @@ class SelectionItem extends StatefulWidget {
   final String iconName;
   final Function() callback;
   final bool enabled;
+  final Color textColor;
+  final Color bgColor;
+  final Color strokeColor;
 
   const SelectionItem({
     this.enabled = true,
+    this.textColor = Colors.white,
+    this.bgColor = CustomColors.neutralColor90,
+    this.strokeColor = CustomColors.neutralColor90,
     Key? key,
     required this.label,
     required this.time,
@@ -268,8 +284,12 @@ class SelectionItemState extends State<SelectionItem> {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           height: 56,
           decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 34, 38, 42),
-              borderRadius: BorderRadius.circular(8)),
+              color: widget.bgColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 1,
+                color: widget.strokeColor,
+              )),
           child: Row(
             children: [
               const SizedBox(width: 16),
@@ -284,13 +304,13 @@ class SelectionItemState extends State<SelectionItem> {
               Text(
                 widget.label,
                 style: TextStyle(
-                    color: widget.enabled ? Colors.white : Colors.grey),
+                    color: widget.enabled ? widget.textColor : Colors.grey),
               ),
               const Spacer(),
               Text(
                 widget.time,
                 style: TextStyle(
-                    color: widget.enabled ? Colors.white : Colors.grey),
+                    color: widget.enabled ? widget.textColor : Colors.grey),
               ),
               const SizedBox(width: 16)
             ],

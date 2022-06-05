@@ -30,7 +30,7 @@ class SetUserBloc extends Bloc<SetUserEvent, SetUserState> {
     on<SetUserEvent>((event, emit) async {
       try {
         final data = UserMapper.toMap(event);
-        _repository.save(data, event.userId).then((value) {
+        await _repository.save(data, event.userId).then((value) {
           emit(SuccessSetUserState());
         });
       } catch (e) {

@@ -75,10 +75,10 @@ class FirstTraingScreen extends StatelessWidget {
   }
 
   void goToConfiguration(BuildContext context) {
-    Navigator.pushNamed(context, ConfigurationScreen.routeName);
+    Navigator.pushReplacementNamed(context, ConfigurationScreen.routeName);
   }
 
   void finished(BuildContext context) {
-    Navigator.pushNamed(context, PreTraningScreen.routeName);
+    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
   }
 }
