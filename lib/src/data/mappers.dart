@@ -56,3 +56,29 @@ class UserMapper {
     );
   }
 }
+
+class TrainingMapper {
+  static String fieldIntensity = "intensity";
+  static String fieldComment = "comment";
+  static String fieldDateTime = "dateTime";
+
+  static String fieldSeriesTimeInSeconds = "seriesTimeInSeconds";
+  static String fieldSleepTimeInSeconds = "sleepTimeInSeconds";
+  static String fieldCycleIntervalInSeconds = "cycleIntervalInSeconds";
+
+  static String fieldSeriesQuantity = "seriesQuantity";
+  static String fieldCycleQuantity = "cycleQuantity";
+
+  static Map<String, dynamic> toMap(SetUserTrainingEvent event) {
+    return <String, dynamic>{
+      fieldIntensity: event.training.intensity.toString(),
+      fieldComment: event.training.comment,
+      fieldDateTime: event.training.dateTime.toString(),
+      fieldSeriesTimeInSeconds: event.training.seriesTimeInSeconds,
+      fieldSleepTimeInSeconds: event.training.sleepTimeInSeconds,
+      fieldCycleIntervalInSeconds: event.training.cycleIntervalInSeconds,
+      fieldSeriesQuantity: event.training.seriesQuantity,
+      fieldCycleQuantity: event.training.cycleQuantity,
+    };
+  }
+}

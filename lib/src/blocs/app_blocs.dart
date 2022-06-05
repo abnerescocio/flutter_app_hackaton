@@ -30,11 +30,29 @@ class SetUserBloc extends Bloc<SetUserEvent, SetUserState> {
     on<SetUserEvent>((event, emit) async {
       try {
         final data = UserMapper.toMap(event);
-        await _repository.save(data, event.userId).then((value) {
+        await _repository.saveUser(data, event.userId).then((value) {
           emit(SuccessSetUserState());
         });
       } catch (e) {
         emit(ErrorSetUserState(e));
+      }
+    });
+  }
+}
+
+class SetUserTrainingBloc
+    extends Bloc<SetUserTrainingEvent, SetUserTrainingState> {
+  final UserRepository _repository = UserRepository();
+
+  SetUserTrainingBloc() : super(InitialSetUserTrainingState()) {
+    on<SetUserTrainingEvent>((event, emit) async {
+      try {
+        final data = TrainingMapper.toMap(event);
+        await _repository.saveUserTraining(data, event.userId).then((value) {
+          emit(SuccessSetUserTrainingState());
+        });
+      } catch (e) {
+        emit(ErrorSetUserTrainingState(e));
       }
     });
   }
