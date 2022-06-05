@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../commons/music_buttons.dart';
 import '../themes/custom_colors.dart';
+import '../utils/converter_utils.dart';
 
 enum TrainnigStatus { rest, trainning }
 
@@ -23,16 +24,16 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
   TrainnigStatus _trainnigStatus = TrainnigStatus.trainning;
   bool _isPaused = false;
 
-  final int _trainningTime = 10;
-  final int _restingTime = 5;
+  final int _trainningTime = 3;
+  final int _restingTime = 2;
   final int _totalCyclesAmount = 3;
-  final int _totalSeriesAmount = 20;
+  final int _totalSeriesAmount = 3;
 
   int _trainningTimeCount = 10;
   int _restingTimeCount = 5;
   int _totalTimeCount = 0;
   int _cyclesCount = 1;
-  int seriesCount = 1;
+  int _seriesCount = 1;
 
   Timer? _timer;
 
@@ -55,6 +56,14 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
             } else {
               _trainnigStatus = TrainnigStatus.trainning;
               _restingTimeCount = _restingTime;
+              _seriesCount = _seriesCount + 1;
+              if (_seriesCount == _totalSeriesAmount + 1) {
+                _cyclesCount = _cyclesCount + 1;
+                _seriesCount = 1;
+                if (_cyclesCount == _totalCyclesAmount) {
+                  timer.cancel();
+                }
+              }
             }
             break;
         }
@@ -89,10 +98,10 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
             ],
           ),
           Row(
-            children: const [
+            children: [
               OneWidget(
                 icon: 'refresh_white',
-                label: '1/3',
+                label: '$_cyclesCount/$_totalCyclesAmount',
                 topMargin: 65,
               ),
             ],
@@ -111,11 +120,16 @@ class _ActiveTrainingScreenState extends State<ActiveTrainingScreen> {
             subtitleInside: _trainnigStatus == TrainnigStatus.trainning
                 ? "Exercite"
                 : "Descanse",
+            seriesCount: '$_seriesCount',
+            seriesAmountTotal: '$_totalSeriesAmount',
           ),
           const SizedBox(
             height: 20,
           ),
-          OneWidget(icon: "timer", label: "$_totalTimeCount", topMargin: 20),
+          OneWidget(
+              icon: "timer",
+              label: "${ConverterUtils.toMinutesAndSeconds(_totalTimeCount)} ",
+              topMargin: 20),
           const SizedBox(
             height: 70,
           ),
