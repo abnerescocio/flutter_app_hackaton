@@ -14,6 +14,8 @@ class AnimatedCircleWidget extends StatelessWidget {
     required this.firstIcon,
     required this.seriesAmountTotal,
     required this.seriesCount,
+    required this.progressValue1,
+    required this.progressValuer2,
   }) : super(key: key);
   final Color circleColor;
   final String titleInside;
@@ -21,6 +23,8 @@ class AnimatedCircleWidget extends StatelessWidget {
   final String firstIcon;
   final String seriesAmountTotal;
   final String seriesCount;
+  final double progressValue1;
+  final double progressValuer2;
 
   @override
   Widget build(BuildContext context) {
@@ -52,22 +56,25 @@ class AnimatedCircleWidget extends StatelessWidget {
           )
         ],
       ),
-      const SizedBox(
+      SizedBox(
         height: 280,
         width: 280,
         child: CircularProgressIndicator(
+            value: progressValuer2,
             strokeWidth: 2,
             backgroundColor: CustomColors.neutralColor90,
-            valueColor:
-                AlwaysStoppedAnimation<Color>(CustomColors.neutralColor30)),
+            valueColor: const AlwaysStoppedAnimation<Color>(
+                CustomColors.neutralColor30)),
       ),
       SizedBox(
         height: 268,
         width: 268,
         child: CircularProgressIndicator(
+            value: progressValue1,
             strokeWidth: 10,
-            backgroundColor: CustomColors.neutralColor90,
-            valueColor: AlwaysStoppedAnimation<Color>(circleColor)),
+            backgroundColor: circleColor,
+            valueColor: const AlwaysStoppedAnimation<Color>(
+                CustomColors.neutralColor90)),
       ),
     ]);
   }
