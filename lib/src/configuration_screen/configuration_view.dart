@@ -3,6 +3,7 @@ import 'package:flutter_app_hackaton/src/components/base_button.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_blocs.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_events.dart';
 import 'package:flutter_app_hackaton/src/blocs/app_states.dart';
+import 'package:flutter_app_hackaton/src/data/mappers.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 import 'package:flutter_app_hackaton/src/utils/converter_utils.dart';
@@ -26,6 +27,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   late final GetUserBloc getUserBloc;
   late final SetUserBloc setUserBloc;
   User? user;
+  bool _hasChanges = false;
 
   @override
   void initState() {
@@ -111,6 +113,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                           callback: (seconds) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.seriesTimeInSeconds = seconds;
                             });
                           },
@@ -131,7 +134,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                             callback: (value) {
                               Navigator.pop(context);
                               setState(() {
-                                // _seriesQuantity = value;
+                                _hasChanges = true;
                                 user?.seriesQuantity = value;
                               });
                             }),
@@ -150,6 +153,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                         callback: (seconds) {
                           Navigator.pop(context);
                           setState(() {
+                            _hasChanges = true;
                             user?.sleepTimeInSeconds = seconds;
                           });
                         },
@@ -169,6 +173,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                           callback: (value) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.cycleQuantity = value;
                             });
                           },
@@ -197,6 +202,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                           callback: (seconds) {
                             Navigator.pop(context);
                             setState(() {
+                              _hasChanges = true;
                               user?.cycleIntervalInSeconds = seconds;
                             });
                           },
@@ -226,30 +232,31 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
   }
 
   void save() {
-    final newUser = User(
-      true,
-      user?.seriesTimeInSeconds ?? 0,
-      user?.sleepTimeInSeconds ?? 0,
-      user?.cycleIntervalInSeconds ?? 0,
-      user?.seriesQuantity ?? 0,
-      user?.cycleQuantity ?? 0,
-    );
+    final newUser = UserMapper.fromUser(user);
     setUserBloc.add(SetUserEvent('time_10', newUser));
     Future.delayed(const Duration(seconds: 1), finished);
   }
 
   void finished() {
-    _showDialog(
-      LeaveFeatureAlert(
-        yes: () {
-          Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
-        },
-        no: () {
-          Navigator.pop(context);
-        },
-      ),
-      height: 360,
-    );
+    if (_hasChanges) {
+      _showDialog(
+        LeaveFeatureAlert(
+          yes: () {
+            goToPreTreining();
+          },
+          no: () {
+            Navigator.pop(context);
+          },
+        ),
+        height: 360,
+      );
+    } else {
+      goToPreTreining();
+    }
+  }
+
+  void goToPreTreining() {
+    Navigator.pushReplacementNamed(context, PreTraningScreen.routeName);
   }
 }
 
