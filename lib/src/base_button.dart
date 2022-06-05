@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/themes/custom_colors.dart';
 
 class BaseButton extends StatelessWidget {
-  BaseButton({Key? key, required this.text}) : super(key: key);
+  BaseButton({Key? key, required this.text, required this.onPressed})
+      : super(key: key);
 
   String text;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class BaseButton extends StatelessWidget {
                   primary: CustomColors.primaryPurpleDark,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50)))),
-              onPressed: () {},
+              onPressed: onPressed,
               child: Text(text, style: TextStyle(fontFamily: 'Lato')),
             ),
           ),
