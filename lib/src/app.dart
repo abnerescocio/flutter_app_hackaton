@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_hackaton/src/configuration_screen/configuration_view.dart';
+import 'package:flutter_app_hackaton/src/finished_training/finished_training.dart';
 import 'package:flutter_app_hackaton/src/first_training/first_traning.dart';
 import 'package:flutter_app_hackaton/src/pre_training/pre_training.dart';
 import 'package:flutter_app_hackaton/src/splash/splash.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
               case PreTraningScreen.routeName:
                 return const PreTraningScreen();
               case FirstTraingScreen.routeName:
-                return const FirstTraingScreen();
+                return const FinishedTrainingScreen();
               case ConfigurationScreen.routeName:
                 return const ConfigurationScreen();
               case ActiveTrainingScreen.routeName:

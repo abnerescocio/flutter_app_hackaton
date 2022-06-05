@@ -29,3 +29,16 @@ class ErrorSetUserState extends SetUserState {
 
   ErrorSetUserState(this.exception);
 }
+
+// SET USER TRAINING STATE
+abstract class SetUserTrainingState {}
+
+class InitialSetUserTrainingState extends SetUserTrainingState {}
+
+class SuccessSetUserTrainingState extends SetUserTrainingState {}
+
+class ErrorSetUserTrainingState extends SetUserTrainingState {
+  final Object exception;
+
+  ErrorSetUserTrainingState(this.exception);
+}

@@ -1,3 +1,5 @@
+import 'package:flutter_app_hackaton/src/models/training.dart';
+
 import '../models/user.dart';
 
 abstract class UserEvent {
@@ -14,4 +16,10 @@ class SetUserEvent extends UserEvent {
   final User user;
 
   SetUserEvent(super.userId, this.user);
+}
+
+class SetUserTrainingEvent extends UserEvent {
+  final Training training;
+
+  SetUserTrainingEvent(super.userId, this.training);
 }
